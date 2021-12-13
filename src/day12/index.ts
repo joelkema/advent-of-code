@@ -1,4 +1,4 @@
-import { input1, input3 } from "./input";
+import { input1, input2, input3 } from "./input";
 
 type Node = {
     name: string;
@@ -37,32 +37,53 @@ const generateNodes = (treeInput: string[]) => {
     return nodes;
 }
 
-let count = 0;
+const validPaths: string[][] = [];
+     
+const hasDuplicates = (arr: string[]) => 
+    new Set(arr).size !== arr.length
 
-const traverse = (nodes: Record<string, Node>, { name, neighbors }: Node, path: string[]) => {
+
+const traverse = (nodes: Record<string, Node>, { name, neighbors }: Node, path: string[], checkDuplicates: boolean = false) => {
     path.push(name);
 
     if(name === "end"){
-        console.log("Found Valid", path); 
-        count++;
-        return path;
+        validPaths.push(path);
+        return;
     }
+
+    const hasDuplicateSmallVisits = checkDuplicates && hasDuplicates(path.filter(isSmallCave)); 
 
     for(let i=0;i<neighbors.length;i++) {
         const n = neighbors[i];
 
-        if((!isStart(n) && countInArray(path, n) < 1) || isBigCave(n)){   
-            traverse(nodes, nodes[n], [...path]);
+        if(isStart(n)) continue;
+
+        if(checkDuplicates && (!hasDuplicateSmallVisits && countInArray(path, n) < 2)){       
+            traverse(nodes, nodes[n], [...path], checkDuplicates); 
+            continue;
         }
+
+        if(countInArray(path, n) < 1 || isBigCave(n)) { 
+            traverse(nodes, nodes[n], [...path], checkDuplicates);  
+        } 
     }
 }
  
 export const assignment1 = () => {
-    const nodes = generateNodes(input1);
-     
-    const validPaths: string[] = [];
+    const nodes = generateNodes(input1);[]
 
-    traverse(nodes, nodes["start"], validPaths); 
-    console.log(count)
+    traverse(nodes, nodes["start"], []); 
+
+    console.log(validPaths.map(path => path.join(",")));
+    console.log(validPaths.length)
 }
+
+export const assignment2 = () => {
+    const nodes = generateNodes(input3);[] 
+
+    traverse(nodes, nodes["start"], [], true); 
+
+    console.log(validPaths.map(path => path.join(",")));
+    console.log(validPaths.length)
+} 
 

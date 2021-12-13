@@ -20,3 +20,4 @@ import * as day12 from "./day12";
 console.log("day12")
 // console.log(day3.assignment1());
 console.log(day12.assignment1());
+console.log(day12.assignment2());
