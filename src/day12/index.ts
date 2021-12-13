@@ -1,12 +1,18 @@
-import { input2, input3 } from "./input";
+import { input1, input3 } from "./input";
 
 type Node = {
     name: string;
     neighbors: string[];
 }
 
+const isStart = (str: string) => str.toLowerCase() === "start";
+const isEnd = (str: string) => str.toLowerCase() === "end";
+
+
 const isSmallCave = (str: string) => str.toLowerCase() === str;
 const isBigCave = (str: string) => str.toUpperCase() === str;
+
+const countInArray = (array: string[], what: string) => array.filter(item => item == what).length;
 
 const generateNodes = (treeInput: string[]) => {
     const allPaths = treeInput.map(x => x.split("-"));
@@ -42,27 +48,21 @@ const traverse = (nodes: Record<string, Node>, { name, neighbors }: Node, path: 
         return path;
     }
 
-    neighbors.forEach(n => {
-        if(!path.includes(n) || isBigCave(n)){ 
+    for(let i=0;i<neighbors.length;i++) {
+        const n = neighbors[i];
+
+        if((!isStart(n) && countInArray(path, n) < 1) || isBigCave(n)){   
             traverse(nodes, nodes[n], [...path]);
         }
-    });
+    }
 }
-
-
-const getDistinctPaths = (nodes: Record<string, Node>) => {
+ 
+export const assignment1 = () => {
+    const nodes = generateNodes(input1);
+     
     const validPaths: string[] = [];
 
     traverse(nodes, nodes["start"], validPaths); 
-
-    console.log(validPaths);
-}
-
-export const assignment1 = () => {
-    const nodes = generateNodes(input3);
-     
-    getDistinctPaths(nodes);
-
-    console.log(count);
+    console.log(count)
 }
 
