@@ -1,20 +1,21 @@
-import { dots } from "./input";
+import { dots, foldInstructions } from "./input";
 
-const empty = "•";
+const empty = ".";
 const dot = "#";
 
 const sort = (array: number[]) => array.sort((a, b) => b -a);
 
-const getMaxY = (array: number[][]) => sort(array.map(arr => arr[0]))[0];
-const getMaxX = (array: number[][]) => sort(array.map(arr => arr[1]))[0]; 
+const getMaxY = (array: number[][]) => sort(array.map(arr => arr[1]))[0];
+const getMaxX = (array: number[][]) => sort(array.map(arr => arr[0]))[0]; 
 
-
-
-const generatePaper = () => {
+const generatePaper = (dots: number[][]): string[][] => {  
     const maxX = getMaxX(dots);
     const maxY = getMaxY(dots);
 
-    const grid = [...Array(maxX)].map(_ => Array(maxY).fill(empty)); 
+    console.log(maxX)
+    console.log(maxY)
+
+    const grid = [...Array(maxX+1)].map(_ => Array(maxY+1).fill(empty)); 
 
     for(let i =0;i<dots.length;i++) {
         const [x, y] = dots[i];
@@ -24,10 +25,74 @@ const generatePaper = () => {
     return grid;
 }
 
+export const getPrint = (paper: string[][]) => {
+    let print = "";
+    const maxY = paper[0].length;
+
+    for(let y=0;y<maxY;y++) { 
+        for(let x=0;x<paper.length;x++) {
+            print += paper[x][y];        
+        }
+        print += "\r\n";
+    }
+    return print;
+}
+
+const foldY = (paper: string[][], amount: number): string[][] => {
+    const foldedPaper: string[][] = [];
+    const maxY = paper[0].length - 1;
+
+    for(let x=0;x<paper.length;x++) {
+        foldedPaper[x] = [];
+        for(let y=maxY;y>=amount;y--) {
+            const yToUpdate = maxY - y;
+            const newValue = paper[x][y];
+            const oldValue = paper[x][yToUpdate];
+
+            foldedPaper[x][yToUpdate] = (oldValue === dot) ? oldValue : newValue;
+        }
+    }
+    return foldedPaper;
+}
+
+const foldX = (paper: string[][], amount: number): string[][] => {
+    const foldedPaper: string[][] = [];
+
+    const maxX = paper.length - 1;
+    const maxY = paper[0].length;
+
+    for(let y=0;y<maxY;y++) { 
+        for(let x=maxX;x>amount;x--) { 
+            const xToUpdate = maxX - x;
+            const newValue = paper[x][y];
+            const oldValue = paper[xToUpdate][y];
+
+            if(!foldedPaper[xToUpdate]) foldedPaper[xToUpdate] = [];
+
+            foldedPaper[xToUpdate][y] = (oldValue === dot) ? oldValue : newValue;
+        }
+    } 
+
+    return foldedPaper; 
+}
+
+const fold = (paper: string[][], instruction: string) => {
+    const [axis, amount] = instruction.split("=");
+
+    return axis === "y" ? foldY(paper, Number(amount)) : foldX(paper, Number(amount));
+}
+
 export const assignment1 = () => {
-    const paper = generatePaper();
+    const unfoldedPaper = generatePaper(dots);
 
+    console.log(getPrint(unfoldedPaper)); 
 
+    let foldedPaper = unfoldedPaper;
 
-    console.log(paper)
+    foldInstructions.forEach(instruction => {
+        foldedPaper = fold(foldedPaper, instruction);
+
+        console.log("\r\n\r\n")
+        console.log(getPrint(foldedPaper))
+    });
 }
