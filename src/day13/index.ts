@@ -1,6 +1,6 @@
 import { dots, foldInstructions } from "./input";
 
-const empty = ".";
+const empty = "."; 
 const dot = "#";
 
 const sort = (array: number[]) => array.sort((a, b) => b -a);
@@ -10,10 +10,7 @@ const getMaxX = (array: number[][]) => sort(array.map(arr => arr[0]))[0];
 
 const generatePaper = (dots: number[][]): string[][] => {  
     const maxX = getMaxX(dots);
-    const maxY = getMaxY(dots);
-
-    console.log(maxX)
-    console.log(maxY)
+    const maxY = getMaxY(dots); 
 
     const grid = [...Array(maxX+1)].map(_ => Array(maxY+1).fill(empty)); 
 
@@ -27,7 +24,7 @@ const generatePaper = (dots: number[][]): string[][] => {
 
 export const getPrint = (paper: string[][]) => {
     let print = "";
-    const maxY = paper[0].length;
+    const maxY = paper[0].length -1;
 
     for(let y=0;y<maxY;y++) { 
         for(let x=0;x<paper.length;x++) {
@@ -40,10 +37,11 @@ export const getPrint = (paper: string[][]) => {
 
 const foldY = (paper: string[][], amount: number): string[][] => {
     const foldedPaper: string[][] = [];
-    const maxY = paper[0].length - 1;
+    const maxY = amount * 2;
 
     for(let x=0;x<paper.length;x++) {
-        foldedPaper[x] = [];
+        if(!foldedPaper[x]) foldedPaper[x] = [];
+
         for(let y=maxY;y>=amount;y--) {
             const yToUpdate = maxY - y;
             const newValue = paper[x][y];
@@ -59,7 +57,7 @@ const foldX = (paper: string[][], amount: number): string[][] => {
     const foldedPaper: string[][] = [];
 
     const maxX = paper.length - 1;
-    const maxY = paper[0].length;
+    const maxY = paper[0].length; 
 
     for(let y=0;y<maxY;y++) { 
         for(let x=maxX;x>amount;x--) { 
@@ -73,10 +71,13 @@ const foldX = (paper: string[][], amount: number): string[][] => {
         }
     } 
 
+    console.log(`RESULTUH: ${foldedPaper.length}`); 
+
+
     return foldedPaper; 
 }
 
-const fold = (paper: string[][], instruction: string) => {
+const fold = (paper: string[][], instruction: string) => { 
     const [axis, amount] = instruction.split("=");
 
     return axis === "y" ? foldY(paper, Number(amount)) : foldX(paper, Number(amount));
@@ -85,14 +86,29 @@ const fold = (paper: string[][], instruction: string) => {
 export const assignment1 = () => {
     const unfoldedPaper = generatePaper(dots);
 
-    console.log(getPrint(unfoldedPaper)); 
+    // console.log(getPrint(unfoldedPaper)); 
+
+    let foldedPaper = unfoldedPaper;
+
+    foldInstructions.slice(0, 1).forEach(instruction => {
+        foldedPaper = fold(foldedPaper, instruction);
+    });
+
+    console.log(getPrint(foldedPaper));
+
+    const total = foldedPaper.reduce((count, array) => count + array.filter(y => y === dot).length, 0);
+
+    console.log(total) 
+}
+
+export const assignment2 = () => {
+    const unfoldedPaper = generatePaper(dots);
 
     let foldedPaper = unfoldedPaper;
 
     foldInstructions.forEach(instruction => {
         foldedPaper = fold(foldedPaper, instruction);
-
-        console.log("\r\n\r\n")
-        console.log(getPrint(foldedPaper))
     });
+
+    console.log(getPrint(foldedPaper));  
 }
