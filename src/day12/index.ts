@@ -71,7 +71,6 @@ const traverse = (
 
 export const assignment1 = () => {
     const nodes = generateNodes(input1);
-    [];
 
     traverse(nodes, nodes["start"], []);
 
@@ -81,7 +80,6 @@ export const assignment1 = () => {
 
 export const assignment2 = () => {
     const nodes = generateNodes(input3);
-    [];
 
     traverse(nodes, nodes["start"], [], true);
 
