@@ -19,9 +19,15 @@ const hasBingo = (calledNumbers: number[]) => (board: number[][]) =>
 const checkBoards = (boards: number[][][], calledNumbers: number[]) => {
     if (calledNumbers.length < 5) return false;
 
-    const board = boards.find(hasBingo(calledNumbers));
+    return boards.filter(hasBingo(calledNumbers));
+};
 
-    return board;
+const calculateFinalScore = (board: number[][], calledNumbers: number[]) => {
+    // Start by finding the sum of all unmarked numbers on that board;
+    const unmarkedNumbers = board.flatMap((r) => r.filter((number) => !calledNumbers.includes(number)));
+
+    // Then, multiply that sum by the number that was just called when the board won, to get the final score.
+    return calledNumbers[calledNumbers.length - 1] * sum(unmarkedNumbers);
 };
 
 export const assignment1 = () => {
@@ -31,20 +37,41 @@ export const assignment1 = () => {
 
     while (!bingo) {
         const calledNumbers = numbers.slice(0, index);
-        const board = checkBoards(boards, calledNumbers);
+        const winningBoards = checkBoards(boards, calledNumbers);
 
-        if (board) {
+        if (winningBoards) {
             bingo = true;
 
-            // Start by finding the sum of all unmarked numbers on that board;
-            const unmarkedNumbers = board.flatMap((r) => r.filter((number) => !calledNumbers.includes(number)));
-
-            // Then, multiply that sum by the number that was just called when the board won, to get the final score.
-            finalScore = calledNumbers[calledNumbers.length - 1] * sum(unmarkedNumbers);
+            // finalScore = calculateFinalScore(winningBoards[0], calledNumbers);
         }
 
         index++;
     }
 
     return finalScore;
+};
+
+export const assignment2 = () => {
+    let boardsWithBingo: number[][][] = [];
+    const allScores: number[] = [];
+
+    for (let i = 1; i <= numbers.length; i++) {
+        const calledNumbers = numbers.slice(0, i);
+        const boardsToCheck = boards.filter((b) => !boardsWithBingo.includes(b));
+        const winningBoards = checkBoards(boardsToCheck, calledNumbers);
+
+        if (winningBoards) {
+            console.log(winningBoards);
+            console.log(`WON BY`);
+            console.log(calledNumbers[calledNumbers.length - 1]);
+            console.log(`calledNumbers`);
+            console.log(calledNumbers);
+
+            boardsWithBingo = boardsWithBingo.concat(winningBoards);
+        }
+    }
+
+    // console.log(allScores);
+
+    return allScores[allScores.length - 1];
 };

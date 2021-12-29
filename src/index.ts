@@ -22,6 +22,7 @@ import * as day21 from "./day21";
 
 console.log("day4");
 console.log(day4.assignment1());
+console.log(day4.assignment2());
 // console.log(day4.assignment2());
 
 // console.log("day12")
