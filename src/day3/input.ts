@@ -1001,4 +1001,4 @@ const input = [
     "111110101010",
 ];
 
-export default input
+export default input;
