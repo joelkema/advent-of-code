@@ -20,8 +20,8 @@ import * as day21 from "./day21";
 // console.log(day3.assignment1());
 // console.log(day3.assignment2());
 
-// console.log("day4")
-// console.log(day4.assignment1());
+console.log("day4");
+console.log(day4.assignment1());
 // console.log(day4.assignment2());
 
 // console.log("day12")
@@ -31,5 +31,5 @@ import * as day21 from "./day21";
 // console.log("day13")
 // console.log(day13.assignment1());
 
-console.log("day21");
-console.log(day21.assignment2());
+// console.log("day21");
+// console.log(day21.assignment2());

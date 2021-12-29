@@ -1,7 +1,6 @@
-const input = ["Player 1 starting position: 8", "Player 2 starting position: 1"];
+import { sum } from "../utils";
 
-const add = (accumulator: number, a: number) => accumulator + a;
-const sum = (array: number[]) => array.reduce(add, 0);
+const input = ["Player 1 starting position: 8", "Player 2 starting position: 1"];
 
 // Because the  game board contains ten spaces (1 - 10), we are only interested in the last digit
 // In case of 0, return 10
