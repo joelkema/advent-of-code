@@ -1,15 +1,4 @@
-// import input from "./input";
-
 const input = ["00100","11110","10110","10111","10101","01111","00111","11100","10000","11001","00010","01010"]; 
-
-// function getMostFrequent(arr: number[]) {
-//     const hashmap = arr.reduce( (acc: Record<number, number>, val: number) => {
-//         acc[val] = (acc[val] || 0 ) + 1
-//         return acc
-//     },{})
-
-//     return Object.keys(hashmap).reduce((a, b) => hashmap[a] > hashmap[b] ? a : b)
-//  }
 
 const sort = (arr: number[]) =>
     arr.sort((a, b) => arr.filter((v) => v === a).length - arr.filter((v) => v === b).length);
@@ -26,9 +15,7 @@ export const assignment1 = () => {
 
     return parseInt(gamma, 2) * parseInt(epsilon, 2); 
 };
-
-
-
+ 
 export const assignment2 = () => {
     let oxygenGeneratorRating = ""; // most common
     let co2ScrubberRating = ""; // least common

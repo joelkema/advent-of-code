@@ -7,9 +7,7 @@ type Node = {
 
 const isStart = (str: string) => str.toLowerCase() === "start";
 const isEnd = (str: string) => str.toLowerCase() === "end";
-
-
-const isSmallCave = (str: string) => str.toLowerCase() === str;
+const isSmallCave = (str: string) => str.toLowerCase() === str; 
 const isBigCave = (str: string) => str.toUpperCase() === str;
 
 const countInArray = (array: string[], what: string) => array.filter(item => item == what).length;
@@ -40,8 +38,7 @@ const generateNodes = (treeInput: string[]) => {
 const validPaths: string[][] = [];
      
 const hasDuplicates = (arr: string[]) => 
-    new Set(arr).size !== arr.length
-
+    new Set(arr).size !== arr.length 
 
 const traverse = (nodes: Record<string, Node>, { name, neighbors }: Node, path: string[], checkDuplicates: boolean = false) => {
     path.push(name);

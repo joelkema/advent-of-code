@@ -71,9 +71,6 @@ const foldX = (paper: string[][], amount: number): string[][] => {
         }
     } 
 
-    console.log(`RESULTUH: ${foldedPaper.length}`); 
-
-
     return foldedPaper; 
 }
 
@@ -86,19 +83,15 @@ const fold = (paper: string[][], instruction: string) => {
 export const assignment1 = () => {
     const unfoldedPaper = generatePaper(dots);
 
-    // console.log(getPrint(unfoldedPaper)); 
-
     let foldedPaper = unfoldedPaper;
 
     foldInstructions.slice(0, 1).forEach(instruction => {
         foldedPaper = fold(foldedPaper, instruction);
     });
 
-    console.log(getPrint(foldedPaper));
-
     const total = foldedPaper.reduce((count, array) => count + array.filter(y => y === dot).length, 0);
 
-    console.log(total) 
+    return total; 
 }
 
 export const assignment2 = () => {
@@ -110,5 +103,5 @@ export const assignment2 = () => {
         foldedPaper = fold(foldedPaper, instruction);
     });
 
-    console.log(getPrint(foldedPaper));  
+    return getPrint(foldedPaper);   
 }
