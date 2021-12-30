@@ -32,7 +32,7 @@ import * as day21 from "./day21";
 
 console.log("day9");
 console.log(day9.assignment1());
-// console.log(day9.assignment2());
+console.log(day9.assignment2());
 
 // console.log("day12")
 // console.log(day12.assignment1());
