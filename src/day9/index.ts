@@ -70,7 +70,7 @@ export const assignment2 = () => {
 
     const basinSizes: number[] = [];
 
-    const a = lowPoints.map((point) => {
+    lowPoints.map((point) => {
         const basin: Point[] = [];
 
         setBasin(basin, points)(point);
