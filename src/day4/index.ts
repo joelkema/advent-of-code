@@ -1,7 +1,7 @@
 import { sum } from "../utils";
 import { numbers, boards } from "./input";
 
-const getColumn = (matrix: number[][], n: number) => matrix.map((row) => row[n]);
+const getColumns = (matrix: number[][], n: number) => matrix.map((row) => row[n]);
 
 const isWinningLine = (calledNumbers: number[]) => (line: number[]) =>
     line.findIndex((number) => !calledNumbers.includes(number)) === -1;
@@ -12,15 +12,12 @@ const checkForBingo = (matrix: number[][], calledNumbers: number[]) =>
 const hasBingo = (calledNumbers: number[]) => (board: number[][]) =>
     checkForBingo(board, calledNumbers) ||
     checkForBingo(
-        board.map((_, i) => getColumn(board, i)),
+        board.map((_, i) => getColumns(board, i)),
         calledNumbers,
     );
 
-const checkBoards = (boards: number[][][], calledNumbers: number[]) => {
-    if (calledNumbers.length < 5) return false;
-
-    return boards.filter(hasBingo(calledNumbers));
-};
+const findBoardWithBingo = (boards: number[][][], calledNumbers: number[]) =>
+    calledNumbers.length >= 5 && boards.find(hasBingo(calledNumbers));
 
 const calculateFinalScore = (board: number[][], calledNumbers: number[]) => {
     // Start by finding the sum of all unmarked numbers on that board;
@@ -37,12 +34,12 @@ export const assignment1 = () => {
 
     while (!bingo) {
         const calledNumbers = numbers.slice(0, index);
-        const winningBoards = checkBoards(boards, calledNumbers);
+        const winningBoards = findBoardWithBingo(boards, calledNumbers);
 
         if (winningBoards) {
             bingo = true;
 
-            // finalScore = calculateFinalScore(winningBoards[0], calledNumbers);
+            finalScore = calculateFinalScore(winningBoards, calledNumbers);
         }
 
         index++;
@@ -58,7 +55,7 @@ export const assignment2 = () => {
     for (let i = 1; i <= numbers.length; i++) {
         const calledNumbers = numbers.slice(0, i);
         const boardsToCheck = boards.filter((b) => !boardsWithBingo.includes(b));
-        const winningBoards = checkBoards(boardsToCheck, calledNumbers);
+        const winningBoards = findBoardWithBingo(boardsToCheck, calledNumbers);
 
         if (winningBoards) {
             console.log(winningBoards);
