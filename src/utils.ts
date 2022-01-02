@@ -15,3 +15,9 @@ export const countChars = (s: string) =>
 
 export const sortNumeric = (array: number[]) => array.sort((a, b) => b - a);
 export const sortAlphabeticly = (s: string) => s.split("").sort().join("");
+
+export const median = (arr: number[]) => {
+    const mid = Math.floor(arr.length / 2),
+        sorted = sortNumeric(arr);
+    return arr.length % 2 !== 0 ? sorted[mid] : sorted[mid - 1];
+};
