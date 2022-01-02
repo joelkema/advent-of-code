@@ -1,4 +1,7 @@
 {
+    "files.exclude": {
+        "**/node_modules": true
+    },
     "workbench.editor.enablePreview": false,
     "editor.formatOnSave": true,
     "editor.formatOnPaste": true,
@@ -6,4 +9,4 @@
     "[javascript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     }
-} 
+}
