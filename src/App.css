@@ -1,0 +1,25 @@
+.wrapper {
+    display: flex;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+nav li {
+    list-style-type: none;
+}
+
+.sidebar {
+    width: 200px;
+    padding-right: 20px;
+    margin-right: 50px;
+    border-right: 1px solid var(--white);
+    color: #babcc1;
+}
+
+.body {
+    margin: 0 50px;
+}
