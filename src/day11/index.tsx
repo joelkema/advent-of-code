@@ -55,16 +55,20 @@ const step = (grid: number[][]): [number[][], number] => {
     // }
 };
 
+// https://adventofcode.com/2021/day/11
 const Day = () => {
     // This ref seems unnecessary, but the for loop is 'faster' than react updating its state
     // This will guarantee us that the latest grid value is used
     const gridRef = useRef(input1);
     const flashesRef = useRef(0);
+    const syncRef = useRef(0);
 
     const [grid, setGrid] = useState(gridRef.current);
+    const gridAmount = grid.length * grid[0].length;
 
     const runStep = async () => {
-        for (let i = 1; i <= 100; i++) {
+        // 334 = answer for part 2
+        for (let i = 1; i <= 334; i++) {
             await delay(200);
 
             const [updatedGrid, amountOfFlashes] = step(gridRef.current);
@@ -73,6 +77,11 @@ const Day = () => {
             flashesRef.current += amountOfFlashes;
 
             setGrid(updatedGrid);
+
+            // Brute force part 2
+            // if (amountOfFlashes === gridAmount) {
+            //     debugger;
+            // }
         }
     };
 
