@@ -1,6 +1,6 @@
 import { cloneDeep, isNil } from "lodash";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { input } from "./input";
+import { input1, testInput2 as input } from "./input";
 
 const flash = (grid: number[][], flashes: string[], y: number, x: number) => {
     increaseEnergyLevel(grid, flashes, y - 1, x); // up
@@ -31,7 +31,7 @@ const increaseEnergyLevel = (grid: number[][], flashes: string[], y: number, x: 
     if (!flashes.includes(`${y}${x}`)) grid[y][x]++;
 };
 
-const step = (grid: number[][]) => {
+const step = (grid: number[][]): [number[][], number] => {
     const flashes: string[] = [];
 
     const clone = cloneDeep(grid);
@@ -44,7 +44,7 @@ const step = (grid: number[][]) => {
         }
     }
 
-    return clone;
+    return [clone, flashes.length];
 
     // for (let y = 0; y < grid.length; y++) {
     //     const row = grid[y];
@@ -57,21 +57,22 @@ const step = (grid: number[][]) => {
 
 const Day = () => {
     // This ref seems unnecessary, but the for loop is 'faster' than react updating its state
-    // This will garuantee us that the latest grid value is uses
-    const gridRef = useRef(input);
+    // This will guarantee us that the latest grid value is used
+    const gridRef = useRef(input1);
+    const flashesRef = useRef(0);
 
     const [grid, setGrid] = useState(gridRef.current);
 
     const runStep = async () => {
-        for (let i = 1; i <= 20; i++) {
-            await delay(1000);
+        for (let i = 1; i <= 100; i++) {
+            await delay(200);
 
-            const updatedGrid = step(gridRef.current);
+            const [updatedGrid, amountOfFlashes] = step(gridRef.current);
 
-            console.log(updatedGrid);
+            gridRef.current = updatedGrid;
+            flashesRef.current += amountOfFlashes;
 
             setGrid(updatedGrid);
-            gridRef.current = updatedGrid;
         }
     };
 
@@ -82,6 +83,7 @@ const Day = () => {
     return (
         <main>
             <h2>Day 11</h2>
+            <h3>Amount of flashes: {flashesRef.current}</h3>
             {grid.map((y) => (
                 <>
                     {y.map((x) => {
