@@ -1,3 +1,4 @@
+import { isNil } from "lodash";
 import { sortNumeric, sum, sumProduct } from "../utils";
 import { input } from "./input";
 
@@ -9,7 +10,6 @@ type Point = {
 
 const isLowest = (height: number, adjacent: Point[]) => height < Math.min(...adjacent.map((a) => a.height));
 const add = (a: number) => (b: number) => a + b;
-const isNil = (a: any) => a === null || a === undefined;
 
 const getAdjacent = (points: Point[][], x: number, y: number) => {
     const up = !isNil(points[y - 1]) ? points[y - 1][x] : null;

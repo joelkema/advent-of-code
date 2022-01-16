@@ -1,8 +1,8 @@
-import { lazy, Suspense } from "react";
 import { Routes, Route, Link, Outlet } from "react-router-dom";
 import "./App.css";
 import Day1 from "./day1";
 import Day10 from "./day10";
+import Day11 from "./day11";
 
 const Home = () => (
     <main>
@@ -63,6 +63,7 @@ const App = () => (
                 <Route index element={<Home />} />
                 <Route path="day1" element={<Day1 />} />
                 <Route path="day10" element={<Day10 />} />
+                <Route path="day11" element={<Day11 />} />
                 <Route path="*" element={<NoMatch />} />
             </Route>
         </Routes>
