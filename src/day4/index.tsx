@@ -27,7 +27,7 @@ const calculateFinalScore = (board: number[][], calledNumbers: number[]) => {
     return calledNumbers[calledNumbers.length - 1] * sum(unmarkedNumbers);
 };
 
-export const assignment1 = () => {
+const assignment1 = () => {
     let bingo = false;
     let finalScore = 0;
     let index = 1;
@@ -48,7 +48,7 @@ export const assignment1 = () => {
     return finalScore;
 };
 
-export const assignment2 = () => {
+const assignment2 = () => {
     let boardsWithBingo: number[][][] = [];
     const allScores: number[] = [];
 
@@ -68,7 +68,15 @@ export const assignment2 = () => {
         }
     }
 
-    // console.log(allScores);
-
     return allScores[allScores.length - 1];
 };
+
+const Day = () => (
+    <main>
+        <h2>Day 4</h2>
+        <p>Part one: {assignment1()}</p>
+        <p>Part two: {assignment2()}</p>
+    </main>
+);
+
+export default Day;

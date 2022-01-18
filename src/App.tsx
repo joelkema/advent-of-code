@@ -1,6 +1,9 @@
 import { Routes, Route, Link, Outlet } from "react-router-dom";
 import "./App.css";
 import Day1 from "./day1";
+import Day2 from "./day2";
+import Day3 from "./day3";
+import Day4 from "./day4";
 import Day10 from "./day10";
 import Day11 from "./day11";
 
@@ -50,11 +53,6 @@ const NoMatch = () => (
     </div>
 );
 
-type DayRouteProps = {
-    nr: number;
-    Component: any;
-};
-
 const App = () => (
     <div className="App">
         <h1>Advent of code 2021</h1>
@@ -62,6 +60,9 @@ const App = () => (
             <Route path="/" element={<Layout />}>
                 <Route index element={<Home />} />
                 <Route path="day1" element={<Day1 />} />
+                <Route path="day2" element={<Day2 />} />
+                <Route path="day3" element={<Day3 />} />
+                <Route path="Day4" element={<Day4 />} />
                 <Route path="day10" element={<Day10 />} />
                 <Route path="day11" element={<Day11 />} />
                 <Route path="*" element={<NoMatch />} />

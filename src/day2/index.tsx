@@ -1,6 +1,6 @@
 import input from "./input";
 
-export const assignment1 = () => {
+const assignment1 = () => {
     let horizontalPosition = 0;
     let depth = 0;
 
@@ -21,7 +21,7 @@ export const assignment1 = () => {
     return horizontalPosition * depth;
 };
 
-export const assignment2 = () => {
+const assignment2 = () => {
     let horizontalPosition = 0;
     let depth = 0;
     let aim = 0;
@@ -43,3 +43,13 @@ export const assignment2 = () => {
 
     return horizontalPosition * depth;
 };
+
+const Day = () => (
+    <main>
+        <h2>Day 2</h2>
+        <p>Part one: {assignment1()}</p>
+        <p>Part two: {assignment2()}</p>
+    </main>
+);
+
+export default Day;

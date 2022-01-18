@@ -16,7 +16,7 @@ const input = [
 const sort = (arr: number[]) =>
     arr.sort((a, b) => arr.filter((v) => v === a).length - arr.filter((v) => v === b).length);
 
-export const assignment1 = () => {
+const assignment1 = () => {
     let gamma = "";
     let epsilon = "";
 
@@ -29,7 +29,7 @@ export const assignment1 = () => {
     return parseInt(gamma, 2) * parseInt(epsilon, 2);
 };
 
-export const assignment2 = () => {
+const assignment2 = () => {
     let oxygenGeneratorRating = ""; // most common
     let co2ScrubberRating = ""; // least common
 
@@ -72,3 +72,12 @@ export const assignment2 = () => {
 
     // return parseInt(gamma, 2) * parseInt(epsilon, 2);
 };
+
+const Day = () => (
+    <main>
+        <h2>Day 3</h2>
+        <p>Part one: {assignment1()}</p>
+    </main>
+);
+
+export default Day;
