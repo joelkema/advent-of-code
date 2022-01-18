@@ -1,6 +1,6 @@
 import { cloneDeep, isNil } from "lodash";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { input1, testInput2 as input } from "./input";
+import { useEffect, useRef, useState } from "react";
+import { input1 } from "./input";
 
 const flash = (grid: number[][], flashes: string[], y: number, x: number) => {
     increaseEnergyLevel(grid, flashes, y - 1, x); // up
@@ -14,8 +14,6 @@ const flash = (grid: number[][], flashes: string[], y: number, x: number) => {
 };
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
-const increase = (level: number) => (level + 1 > 9 ? 0 : level + 1);
 
 const increaseEnergyLevel = (grid: number[][], flashes: string[], y: number, x: number) => {
     if (y < 0 || x < 0) return;
@@ -45,14 +43,6 @@ const step = (grid: number[][]): [number[][], number] => {
     }
 
     return [clone, flashes.length];
-
-    // for (let y = 0; y < grid.length; y++) {
-    //     const row = grid[y];
-
-    //     for (let x = 0; x < row.length; x++) {
-    //         increaseEnergyLevel(grid, flashes, y, x);
-    //     }
-    // }
 };
 
 // https://adventofcode.com/2021/day/11
@@ -61,38 +51,39 @@ const Day = () => {
     // This will guarantee us that the latest grid value is used
     const gridRef = useRef(input1);
     const flashesRef = useRef(0);
-    const syncRef = useRef(0);
+    const stepsRef = useRef(0);
 
     const [grid, setGrid] = useState(gridRef.current);
     const gridAmount = grid.length * grid[0].length;
 
-    const runStep = async () => {
-        // 334 = answer for part 2
-        for (let i = 1; i <= 334; i++) {
-            await delay(200);
-
-            const [updatedGrid, amountOfFlashes] = step(gridRef.current);
-
-            gridRef.current = updatedGrid;
-            flashesRef.current += amountOfFlashes;
-
-            setGrid(updatedGrid);
-
-            // Brute force part 2
-            // if (amountOfFlashes === gridAmount) {
-            //     debugger;
-            // }
-        }
-    };
-
     useEffect(() => {
+        const runStep = async () => {
+            while (true) {
+                await delay(200);
+
+                const [updatedGrid, amountOfFlashes] = step(gridRef.current);
+
+                gridRef.current = updatedGrid;
+                flashesRef.current += amountOfFlashes;
+                stepsRef.current += 1;
+
+                setGrid(updatedGrid);
+
+                // Brute force part 2
+                if (amountOfFlashes === gridAmount) {
+                    break;
+                }
+            }
+        };
+
         runStep();
-    }, []);
+    }, [gridAmount]);
 
     return (
         <main>
             <h2>Day 11</h2>
             <h3>Amount of flashes: {flashesRef.current}</h3>
+            <h3>Amount of steps: {stepsRef.current}</h3>
             {grid.map((y) => (
                 <>
                     {y.map((x) => {
@@ -101,7 +92,6 @@ const Day = () => {
                     <br />
                 </>
             ))}
-            <p>Part one:</p>
         </main>
     );
 };
