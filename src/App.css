@@ -13,11 +13,12 @@ nav li {
 }
 
 .sidebar {
-    width: 200px;
+    width: 250px;
     padding-right: 20px;
     margin-right: 50px;
     border-right: 1px solid var(--white);
     color: #babcc1;
+    overflow-y: auto;
 }
 
 .body {

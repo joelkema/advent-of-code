@@ -1,11 +1,13 @@
 import { Routes, Route, Link, Outlet } from "react-router-dom";
 import "./App.css";
-import Day1 from "./2021/day1";
-import Day2 from "./2021/day2";
-import Day3 from "./2021/day3";
-import Day4 from "./2021/day4";
-import Day10 from "./2021/day10";
-import Day11 from "./2021/day11";
+import { default as Day12021 } from "./2021/day1";
+import { default as Day22021 } from "./2021/day2";
+import { default as Day32021 } from "./2021/day3";
+import { default as Day42021 } from "./2021/day4";
+import { default as Day102021 } from "./2021/day10";
+import { default as Day112021 } from "./2021/day11";
+import { default as Day12022 } from "./2022/day1";
+import { FC } from "react";
 
 const Home = () => (
     <main>
@@ -20,29 +22,40 @@ const Home = () => (
 
 const days = [...Array(24)].map((u, i) => i + 1);
 
-const Layout = () => {
-    return (
-        <div className="wrapper">
-            <div className="sidebar">
-                <nav>
-                    <ul>
-                        <li>
-                            <Link to="/">Home</Link>
-                        </li>
-                        {days.map((day) => (
-                            <li>
-                                <Link key={day} to={`/day${day}`}>
-                                    Day {day}
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
-                </nav>
-            </div>
-            <Outlet />
-        </div>
-    );
+type LayoutProps = {
+    years: number[];
 };
+
+const Layout: FC<LayoutProps> = ({ years }) => (
+    <div className="wrapper">
+        <div className="sidebar">
+            <nav>
+                <ul>
+                    <li>
+                        <Link to="/">Home</Link>
+                    </li>
+                    {years.map((year) => (
+                        <>
+                            <li>
+                                <Link to={`/${year}`}>{year}</Link>
+                            </li>
+                            <ul>
+                                {days.map((day) => (
+                                    <li>
+                                        <Link key={day} to={`/2021/day${day}`}>
+                                            Day {day}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </>
+                    ))}
+                </ul>
+            </nav>
+        </div>
+        <Outlet />
+    </div>
+);
 
 const NoMatch = () => (
     <div>
@@ -57,14 +70,15 @@ const App = () => (
     <div className="App">
         <h1>Advent of code 2021</h1>
         <Routes>
-            <Route path="/" element={<Layout />}>
+            <Route path="/" element={<Layout years={[2021, 2022]} />}>
                 <Route index element={<Home />} />
-                <Route path="day1" element={<Day1 />} />
-                <Route path="day2" element={<Day2 />} />
-                <Route path="day3" element={<Day3 />} />
-                <Route path="Day4" element={<Day4 />} />
-                <Route path="day10" element={<Day10 />} />
-                <Route path="day11" element={<Day11 />} />
+                <Route path="/2021/day1" element={<Day12021 />} />
+                <Route path="/2021/day2" element={<Day22021 />} />
+                <Route path="/2021/day3" element={<Day32021 />} />
+                <Route path="/2021/Day4" element={<Day42021 />} />
+                <Route path="/2021/day10" element={<Day102021 />} />
+                <Route path="/2021/day11" element={<Day112021 />} />
+                <Route path="/2022/day1" element={<Day12022 />} />
                 <Route path="*" element={<NoMatch />} />
             </Route>
         </Routes>
