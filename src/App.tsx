@@ -1,11 +1,11 @@
 import { Routes, Route, Link, Outlet } from "react-router-dom";
 import "./App.css";
-import Day1 from "./day1";
-import Day2 from "./day2";
-import Day3 from "./day3";
-import Day4 from "./day4";
-import Day10 from "./day10";
-import Day11 from "./day11";
+import Day1 from "./2021/day1";
+import Day2 from "./2021/day2";
+import Day3 from "./2021/day3";
+import Day4 from "./2021/day4";
+import Day10 from "./2021/day10";
+import Day11 from "./2021/day11";
 
 const Home = () => (
     <main>

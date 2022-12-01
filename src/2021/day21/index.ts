@@ -1,4 +1,4 @@
-import { sum } from "../utils";
+import { sum } from "../../utils";
 
 const input = ["Player 1 starting position: 8", "Player 2 starting position: 1"];
 

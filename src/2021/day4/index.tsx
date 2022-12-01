@@ -1,4 +1,4 @@
-import { sum } from "../utils";
+import { sum } from "../../utils";
 import { numbers, boards } from "./input";
 
 const getColumns = (matrix: number[][], n: number) => matrix.map((row) => row[n]);
@@ -50,15 +50,18 @@ const assignment1 = () => {
 
 const assignment2 = () => {
     let boardsWithBingo: number[][][] = [];
+    const boardsToCheck = () => boards.filter((b) => !boardsWithBingo.includes(b));
     const allScores: number[] = [];
 
     for (let i = 1; i <= numbers.length; i++) {
         const calledNumbers = numbers.slice(0, i);
-        const boardsToCheck = boards.filter((b) => !boardsWithBingo.includes(b));
-        const winningBoards = findBoardWithBingo(boardsToCheck, calledNumbers);
+
+        const winningBoards = findBoardWithBingo(boardsToCheck(), calledNumbers);
+
+        console.log(boardsToCheck().length);
 
         if (winningBoards) {
-            console.log(winningBoards);
+            // console.log(winningBoards);
             console.log(`WON BY`);
             console.log(calledNumbers[calledNumbers.length - 1]);
             console.log(`calledNumbers`);

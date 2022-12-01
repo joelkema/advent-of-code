@@ -1,4 +1,4 @@
-import { countChars, difference, sortAlphabeticly, swap } from "../utils";
+import { countChars, difference, sortAlphabeticly, swap } from "../../utils";
 import { input } from "./input";
 
 type Entry = {

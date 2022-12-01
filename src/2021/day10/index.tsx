@@ -1,4 +1,4 @@
-import { median, sortNumeric, sum } from "../utils";
+import { median, sortNumeric, sum } from "../../utils";
 import { input } from "./input";
 
 const openParentheses = ["(", "{", "[", "<"];

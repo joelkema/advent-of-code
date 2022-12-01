@@ -1,5 +1,5 @@
 import { isNil } from "lodash";
-import { sortNumeric, sum, sumProduct } from "../utils";
+import { sortNumeric, sum, sumProduct } from "../../utils";
 import { input } from "./input";
 
 type Point = {
