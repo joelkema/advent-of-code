@@ -1,6 +1,9 @@
 import { isDefined, sortNumeric, sum } from "../../utils";
 import { input } from "./input";
 
+// split by double enter
+const splitted = input.split(/\n\s*\n/);
+
 const getCalories = (accumulator: number[], line: string) => {
     const numbers = line
         .split(/\n/)
@@ -12,9 +15,9 @@ const getCalories = (accumulator: number[], line: string) => {
     return accumulator;
 };
 
-export const assignment1 = () => Math.max(...input.split(/\n\s*\n/).reduce(getCalories, []));
+export const assignment1 = () => Math.max(...splitted.reduce(getCalories, []));
 
-export const assignment2 = () => sum(sortNumeric(input.split(/\n\s*\n/).reduce(getCalories, [])).slice(0, 3));
+export const assignment2 = () => sum(sortNumeric(splitted.reduce(getCalories, [])).slice(0, 3));
 
 const Day = () => (
     <main>
