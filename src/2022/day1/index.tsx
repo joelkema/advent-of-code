@@ -1,11 +1,10 @@
-import { isDefined, removeWhitespaces, sortNumeric, sum } from "../../utils";
+import { isDefined, sortNumeric, sum } from "../../utils";
 import { input } from "./input";
 
 const getCalories = (accumulator: number[], line: string) => {
     const numbers = line
         .split(/\n/)
         .filter(isDefined)
-        .map(removeWhitespaces)
         .map((a) => parseInt(a, 10));
 
     accumulator.push(sum(numbers));
