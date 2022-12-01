@@ -1,13 +1,27 @@
-// const add = (accumulator: number, a: number) => accumulator + a;
-// const sliceAndSum = (start: number, end: number) => input.slice(start, end).reduce(add, 0);
+import { isDefined, removeWhitespaces, sortNumeric, sum } from "../../utils";
+import { input } from "./input";
 
-// const assignment1 = () => input.filter((v, i) => v < input[i + 1]).length;
+const getCalories = (accumulator: number[], line: string) => {
+    const numbers = line
+        .split(/\n/)
+        .filter(isDefined)
+        .map(removeWhitespaces)
+        .map((a) => parseInt(a, 10));
 
-// const assignment2 = () => input.filter((v, i) => sliceAndSum(i + 1, i + 4) > sliceAndSum(i, i + 3)).length;
+    accumulator.push(sum(numbers));
+
+    return accumulator;
+};
+
+export const assignment1 = () => Math.max(...input.split(/\n\s*\n/).reduce(getCalories, []));
+
+export const assignment2 = () => sum(sortNumeric(input.split(/\n\s*\n/).reduce(getCalories, [])).slice(0, 3));
 
 const Day = () => (
     <main>
         <h2>Day 1</h2>
+        <p>Part one: {assignment1()}</p>
+        <p>Part two: {assignment2()}</p>
     </main>
 );
 

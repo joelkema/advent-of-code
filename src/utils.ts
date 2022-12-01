@@ -1,5 +1,10 @@
+import { readFileSync } from "fs";
+import { resolve } from "path";
+
 const add = (accumulator: number, a: number) => accumulator + a;
 const multiply = (accumulator: number, a: number) => accumulator * a;
+
+export const isDefined = (value: any) => !!value;
 
 export const sum = (array: number[]) => array.reduce(add, 0);
 export const sumProduct = (array: number[]) => array.reduce(multiply, 1);
@@ -21,3 +26,10 @@ export const median = (arr: number[]) => {
         sorted = sortNumeric(arr);
     return arr.length % 2 !== 0 ? sorted[mid] : sorted[mid - 1];
 };
+
+export const removeWhitespaces = (str: string) => str.replace(/\s/g, "");
+
+export const getInput = () =>
+    fetch("/input.txt")
+        .then((response) => response.text())
+        .then((text) => console.log(text));

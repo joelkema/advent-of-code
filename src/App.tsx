@@ -42,7 +42,7 @@ const Layout: FC<LayoutProps> = ({ years }) => (
                             <ul>
                                 {days.map((day) => (
                                     <li>
-                                        <Link key={day} to={`/2021/day${day}`}>
+                                        <Link key={day} to={`/${year}/day${day}`}>
                                             Day {day}
                                         </Link>
                                     </li>
