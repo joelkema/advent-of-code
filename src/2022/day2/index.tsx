@@ -7,19 +7,7 @@ type Letter = OpponentLetter | YourLetter;
 type Shape = "rock" | "paper" | "scissors";
 type Outcome = "win" | "draw" | "loss";
 
-// split by double enter
-// const splitted = input.split(/\n\s*\n/);
-
-// const getCalories = (accumulator: number[], line: string) => {
-//     const numbers = line
-//         .split(/\n/)
-//         .filter(isDefined)
-//         .map((a) => parseInt(a, 10));
-
-//     accumulator.push(sum(numbers));
-
-//     return accumulator;
-// };
+const lines = input.split(/\n/).filter(removeWhitespaces);
 
 const shapes: Record<Letter, Shape> = {
     A: "rock",
@@ -57,8 +45,6 @@ const outcomeOfTheRound = (opponent: Shape, you: Shape): Outcome => {
 const getScore = (shape: Shape, outcome: Outcome) => scoreShape[shape] + scoreOutcome[outcome];
 
 export const assignment1 = () => {
-    const lines = input.split(/\n/).filter(removeWhitespaces);
-
     const scores = lines.map((line) => {
         const [opponent, you] = line.split(" ");
 
