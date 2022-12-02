@@ -72,8 +72,6 @@ const getTotalScore = (mapYourShape: (opponent: Shape, yourLetter: YourLetter) =
         const opponentsShape = shapes[opponent as OpponentLetter];
         const yourShape = mapYourShape(opponentsShape, you as YourLetter);
 
-        console.log(yourShape);
-
         const outcome = outcomeOfTheRound(opponentsShape, yourShape);
 
         return calculateScore(yourShape, outcome);
