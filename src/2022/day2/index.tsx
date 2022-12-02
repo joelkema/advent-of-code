@@ -1,4 +1,4 @@
-import { isDefined, removeWhitespaces, sortNumeric, sum } from "../../utils";
+import { removeWhitespaces, sum } from "../../utils";
 import { input } from "./input";
 
 type OpponentLetter = "A" | "B" | "C";
@@ -16,6 +16,12 @@ const shapes: Record<Letter, Shape> = {
     X: "rock",
     Y: "paper",
     Z: "scissors",
+};
+
+const outcomes: Record<YourLetter, Outcome> = {
+    X: "loss",
+    Y: "draw",
+    Z: "win",
 };
 
 const scoreShape: Record<Shape, number> = {
@@ -42,30 +48,48 @@ const outcomeOfTheRound = (opponent: Shape, you: Shape): Outcome => {
     return "loss";
 };
 
-const getScore = (shape: Shape, outcome: Outcome) => scoreShape[shape] + scoreOutcome[outcome];
+const calculateScore = (shape: Shape, outcome: Outcome) => scoreShape[shape] + scoreOutcome[outcome];
 
-export const assignment1 = () => {
+const getOutcomeBasedShape = (opponent: Shape, yourLetter: YourLetter): Shape => {
+    const outcome = outcomes[yourLetter];
+
+    if (outcome === "draw") return opponent;
+    if (outcome === "win") {
+        if (opponent === "rock") return "paper";
+        if (opponent === "paper") return "scissors";
+        return "rock";
+    }
+
+    if (opponent === "rock") return "scissors";
+    if (opponent === "paper") return "rock";
+    return "paper";
+};
+
+const getTotalScore = (mapYourShape: (opponent: Shape, yourLetter: YourLetter) => Shape) => {
     const scores = lines.map((line) => {
         const [opponent, you] = line.split(" ");
 
-        const shapeOpponent = shapes[opponent as OpponentLetter];
-        const shapeYou = shapes[you as YourLetter];
+        const opponentsShape = shapes[opponent as OpponentLetter];
+        const yourShape = mapYourShape(opponentsShape, you as YourLetter);
 
-        const outcome = outcomeOfTheRound(shapeOpponent, shapeYou);
+        console.log(yourShape);
 
-        return getScore(shapeYou, outcome);
+        const outcome = outcomeOfTheRound(opponentsShape, yourShape);
+
+        return calculateScore(yourShape, outcome);
     });
 
-    return scores;
+    return sum(scores);
 };
 
-// export const assignment2 = () => sum(sortNumeric(splitted.reduce(getCalories, [])).slice(0, 3));
+export const assignment1 = () => getTotalScore((_, you) => shapes[you]);
+export const assignment2 = () => getTotalScore(getOutcomeBasedShape);
 
 const Day = () => (
     <main>
         <h2>Day 1</h2>
         <p>Part one: {assignment1()}</p>
-        {/* <p>Part two: {assignment2()}</p> */}
+        <p>Part two: {assignment2()}</p>
     </main>
 );
 
