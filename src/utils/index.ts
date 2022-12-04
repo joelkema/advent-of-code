@@ -1,6 +1,3 @@
-import { readFileSync } from "fs";
-import { resolve } from "path";
-
 const add = (accumulator: number, a: number) => accumulator + a;
 const multiply = (accumulator: number, a: number) => accumulator * a;
 
