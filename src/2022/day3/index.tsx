@@ -3,7 +3,7 @@ import { chunk } from "../../utils/array";
 import { alphabet } from "../../utils/string";
 import { input } from "./input";
 
-const lines = input.split(/\n/).filter(removeWhitespaces);
+const allLines = input.split(/\n/).filter(removeWhitespaces).map(removeWhitespaces);
 
 const priority = `${alphabet}${alphabet.toUpperCase()}`.split("");
 
@@ -18,33 +18,19 @@ const getRucksacks = (content: string) => {
 // coverting to set results in unique chars
 const getSameChar = (lines: string[]) => {
     const chars = Array.from(new Set(lines[0].split("")));
-    const flat = lines.slice(1, lines.length - 1);
+    const flat = lines.slice(1);
 
-    return chars.find((s) => flat.in);
-};
-// .find((s) => s2.includes(s) && (!s3 || s3.includes(s)))!;
+    const a = chars.find((s) => flat.every((f) => f.includes(s)))!;
 
-const mapLineToPriority = (line: string) => {
-    console.log(getSameChar(getRucksacks(line)));
-    return priority.indexOf(getSameChar(getRucksacks(line))) + 1;
+    return a;
 };
 
-const mapLinesToPriority = (l: string[]) => sum(l.map(mapLineToPriority));
+const mapLineToPriority = (line: string) => priority.indexOf(getSameChar(getRucksacks(line))) + 1;
+const mapLinesToPriority = (l: string[]) => l.map(mapLineToPriority);
 
-const assignment1 = () => {
-    const a = mapLinesToPriority(lines);
+const assignment1 = () => sum(mapLinesToPriority(allLines));
 
-    console.log(a);
-};
-
-const assignment2 = () => {
-    const groups = chunk(lines, 3);
-
-    // console.log(groups.map(mapLinesToPriority));
-
-    // debugger;
-};
-// export const assignment2 = () => getTotalScore(getOutcomeBasedShape);
+const assignment2 = () => sum(chunk([...allLines], 3).map((group) => priority.indexOf(getSameChar(group)) + 1));
 
 const Day = () => (
     <main>
