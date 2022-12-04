@@ -85,7 +85,7 @@ export const assignment2 = () => getTotalScore(getOutcomeBasedShape);
 
 const Day = () => (
     <main>
-        <h2>Day 1</h2>
+        <h2>Day 2</h2>
         <p>Part one: {assignment1()}</p>
         <p>Part two: {assignment2()}</p>
     </main>
