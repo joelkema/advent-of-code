@@ -11,6 +11,7 @@ import { default as Day22022 } from "./2022/day2";
 import { default as Day32022 } from "./2022/day3";
 import { default as Day42022 } from "./2022/day4";
 import { default as Day52022 } from "./2022/day5";
+import { default as Day62022 } from "./2022/day6";
 import { FC } from "react";
 
 const Home = () => (
@@ -87,6 +88,7 @@ const App = () => (
                 <Route path="/2022/day3" element={<Day32022 />} />
                 <Route path="/2022/day4" element={<Day42022 />} />
                 <Route path="/2022/day5" element={<Day52022 />} />
+                <Route path="/2022/day6" element={<Day62022 />} />
                 <Route path="*" element={<NoMatch />} />
             </Route>
         </Routes>

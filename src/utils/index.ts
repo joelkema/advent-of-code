@@ -24,7 +24,7 @@ export const median = (arr: number[]) => {
     return arr.length % 2 !== 0 ? sorted[mid] : sorted[mid - 1];
 };
 
-export const removeWhitespaces = (str: string) => str.replace(/\s/g, "");
+export const removeWhitespaces = (str: string): string => str.replace(/\s/g, "");
 
 export const getInput = () =>
     fetch("/input.txt")
