@@ -1,37 +1,32 @@
-import { cloneDeep } from "lodash";
-import { transpose } from "../../utils/array";
-import { getNewLines, replaceAll } from "../../utils/string";
 import { input } from "./input";
 
 const dataStreamBuffer = input.split("");
 
-const assignment1 = () => {
+const assignment = (countUnique = 4) => {
     let markerPos = 0;
     const characters: string[] = [];
 
     for (let i = 0; i < dataStreamBuffer.length; i++) {
         const unique = new Set(characters);
         markerPos = i;
-        if (characters.length === 4 && unique.size < 4) {
+        if (characters.length === countUnique && unique.size < countUnique) {
             characters.shift();
             characters.push(dataStreamBuffer[i]);
-        } else if (characters.length < 4) {
+        } else if (characters.length < countUnique) {
             characters.push(dataStreamBuffer[i]);
         } else {
             break;
         }
     }
 
-    debugger;
-
-    return 1;
+    return markerPos;
 };
 
 const Day = () => (
     <main>
         <h2>Day 6</h2>
-        <p>Part one: {assignment1()}</p>
-        {/* <p>Part two: {assignment(false)}</p> */}
+        <p>Part one: {assignment(4)}</p>
+        <p>Part two: {assignment(14)}</p>
     </main>
 );
 
