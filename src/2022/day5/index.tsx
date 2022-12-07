@@ -35,7 +35,7 @@ const initialStacks = transpose(
 ).map((s) => s.filter((a) => a !== ""));
 
 const move =
-    (stacks: string[][]) =>
+    (stacks: string[][], reverse = true) =>
     ({ amount, from, to }: Command) => {
         const updatedStacks = cloneDeep(stacks);
 
@@ -48,8 +48,8 @@ const move =
 
         console.log(`move ${cratesToMove.join(",")} from ${from} to ${to}`);
 
-        // stacks[fromIndex] = [...stacks[fromIndex]];
-        updatedStacks[toIndex] = [...cratesToMove, ...updatedStacks[toIndex]];
+        const crates = reverse ? cratesToMove.reverse() : cratesToMove;
+        updatedStacks[toIndex] = [...crates, ...updatedStacks[toIndex]];
 
         console.log("after move");
         console.log(updatedStacks);
@@ -57,22 +57,21 @@ const move =
         return updatedStacks;
     };
 
-const assignment1 = () => {
+const assignment = (reverse = true) => {
     let stacks = initialStacks;
 
-    commands.forEach((command) => {
-        stacks = move(stacks)(command);
-    });
-};
+    for (let i = 0; i < commands.length; i++) {
+        stacks = move(stacks, reverse)(commands[i]);
+    }
 
-// const assignment2 = () =>
-//     filterLines((firstSections, secondSections) => firstSections.some((n) => secondSections.includes(n)))(allLines);
+    return stacks.map(([first]) => first).join("");
+};
 
 const Day = () => (
     <main>
         <h2>Day 5</h2>
-        <p>Part one: {assignment1()}</p>
-        {/* <p>Part two: {assignment2()}</p> */}
+        <p>Part one: {assignment()}</p>
+        <p>Part two: {assignment(false)}</p>
     </main>
 );
 
