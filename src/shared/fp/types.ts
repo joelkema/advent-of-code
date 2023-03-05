@@ -10,16 +10,6 @@ export type Debuggable = {
 
 export type Functor<A> = Debuggable & {
     /**
-     * @name map
-     * @description Alias for fmap. Fantasy Land Monad conformance.
-     * fmap :: (a -> b) -> f a -> f b
-     * @methodOf Functor#
-     * @public
-     * @see Functor#fmap
-     */
-    map<B>(f: (t: A) => B): Functor<B>;
-
-    /**
      * @name emit
      * @description Takes the content out of the box
      * @methodOf Functor#
@@ -47,6 +37,16 @@ export type Monad<A> = Functor<A> & {
      * @see Monad#bind
      */
     chain<B>(f: (t: A) => Monad<B>): Monad<B>;
+
+    /**
+     * @name map
+     * @description Alias for fmap. Fantasy Land Monad conformance.
+     * fmap :: (a -> b) -> f a -> f b
+     * @methodOf Functor#
+     * @public
+     * @see Functor#fmap
+     */
+    map<B>(f: (t: A) => B): Monad<B>;
 };
 
 export type Maybe<A> = Debuggable & {
