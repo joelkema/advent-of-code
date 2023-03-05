@@ -1,6 +1,5 @@
 import and from ".";
 import { isGreaterThanEquals, isNumber } from "../../predicates";
-import { expect, test } from "vitest";
 
 // isLegalDrinkingAge :: Number -> Boolean
 const isLegalDrinkingAge = and(isNumber, isGreaterThanEquals(21));

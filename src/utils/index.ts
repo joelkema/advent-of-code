@@ -1,8 +1,10 @@
+import { reduce } from "./array";
+
 const add = (accumulator: number, a: number) => accumulator + a;
 const multiply = (accumulator: number, a: number) => accumulator * a;
 
-export const sum = (array: number[]) => array.reduce(add, 0);
-export const sumProduct = (array: number[]) => array.reduce(multiply, 1);
+export const sum = reduce(add, 0);
+export const sumProduct = reduce(multiply, 1);
 
 export const difference = <T>(arr1: T[], arr2: T[]) =>
     arr1.filter((x) => !arr2.includes(x)).concat(arr2.filter((x) => !arr1.includes(x)));

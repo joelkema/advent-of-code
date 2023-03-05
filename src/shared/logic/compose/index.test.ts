@@ -1,5 +1,4 @@
 import compose from ".";
-import { expect, test } from "vitest";
 
 const toUpperCase = (x: string) => x.toUpperCase();
 const exclaim = (x: string) => `${x}!`;

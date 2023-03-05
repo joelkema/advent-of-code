@@ -7,6 +7,9 @@ export type PredOrFn<T> = boolean | ((x: T) => boolean);
  */
 export const predOrFn = <T>(pred: PredOrFn<T>, x: T) => (isBoolean(pred) ? pred : pred(x));
 
+/** isDefined :: a -> Boolean */
+export const isDefined = (a: any) => !!a;
+
 /** isBoolean :: a -> Boolean */
 export const isBoolean = (a: any): a is boolean => "boolean" === typeof a;
 

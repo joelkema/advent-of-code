@@ -1,5 +1,4 @@
 import { Maybe } from "./maybe";
-import { expect, test } from "vitest";
 import { compose } from "../logic";
 import curry from "../logic/curry";
 

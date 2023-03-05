@@ -1,4 +1,3 @@
-import { expect, test } from "vitest";
 import { isLessThan, isPositive, isNegative } from ".";
 
 const isLessThanFour = isLessThan(4);
