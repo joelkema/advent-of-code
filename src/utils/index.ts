@@ -1,8 +1,6 @@
 const add = (accumulator: number, a: number) => accumulator + a;
 const multiply = (accumulator: number, a: number) => accumulator * a;
 
-export const isDefined = (value: any) => !!value;
-
 export const sum = (array: number[]) => array.reduce(add, 0);
 export const sumProduct = (array: number[]) => array.reduce(multiply, 1);
 

@@ -1,3 +1,4 @@
+import { getNewLines } from "../../utils/string";
 import { input } from "./input";
 
 type File = {
@@ -16,10 +17,54 @@ const createDir = (name: string, dirs: Directory[] = [], files: File[] = []) => 
     dirs,
     files,
 });
+const createFile = (name: string, size: number): File => ({
+    name,
+    size,
+});
 
-const fileSystem: Directory = createDir("/", [createDir("a", [createDir("e")], [{ name: "1.txt", size: 999 }])]);
+const terminalOutput = getNewLines(input);
+const fileSystem: Directory = createDir("/");
+
+const traverseDirs = (fileSystem: Directory, dir: string) => {
+    console.log("trying to find " + dir);
+    console.log(fileSystem);
+
+    return fileSystem.dirs.find((a) => a.name === dir)!;
+};
+
+const createOrGetDir = (currentDir: Directory, name: string) => {
+    const existingDir = fileSystem.dirs.find((a) => a.name === name);
+    if (existingDir) return existingDir;
+
+    const newDir = createDir(name);
+    currentDir.dirs.push(newDir);
+
+    return newDir;
+};
+
+const changeDir = (dir: string): Directory => {
+    if (dir === "/") return fileSystem;
+
+    return traverseDirs(fileSystem, dir);
+};
 
 const assignment1 = () => {
+    let cursor: string[] = [];
+    let currentDir: Directory = fileSystem;
+
+    for (let i = 0; i < terminalOutput.length; i++) {
+        const pieces = terminalOutput[i].split(" ");
+
+        if (pieces[0] === "$" && pieces[1] === "cd") {
+            currentDir = changeDir(pieces[2]);
+        } else if (pieces[0] === "$" && pieces[1] === "ls") continue;
+        else if (pieces[0] === "dir") {
+            currentDir = createOrGetDir(currentDir, pieces[1]);
+        } else {
+            currentDir.files.push(createFile(pieces[1], parseInt(pieces[0])));
+        }
+    }
+
     return 1;
 };
 
