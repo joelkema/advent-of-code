@@ -1,4 +1,8 @@
+import { Identity } from "../../shared/fp/identity";
+import { pipe } from "../../shared/logic";
 import { removeWhitespaces, sum } from "../../utils";
+import { map } from "../../utils/array";
+import { split } from "../../utils/string";
 import { input } from "./input";
 
 type OpponentLetter = "A" | "B" | "C";
@@ -6,6 +10,8 @@ type YourLetter = "X" | "Y" | "Z";
 type Letter = OpponentLetter | YourLetter;
 type Shape = "rock" | "paper" | "scissors";
 type Outcome = "win" | "draw" | "loss";
+
+const format = (i: string) => pipe(i, split(/\n/), map(removeWhitespaces));
 
 const lines = input.split(/\n/).filter(removeWhitespaces);
 
@@ -65,12 +71,29 @@ const getOutcomeBasedShape = (opponent: Shape, yourLetter: YourLetter): Shape =>
     return "paper";
 };
 
-const getTotalScore = (mapYourShape: (opponent: Shape, yourLetter: YourLetter) => Shape) => {
+const fptje = (mapper: (opponent: Shape, yourLetter: YourLetter) => Shape) => {
+    const localFn = (line: string) => {
+        const [opponent, you] = line.split(" ");
+
+        const opponentsShape = shapes[opponent as OpponentLetter];
+        const yourShape = mapper(opponentsShape, you as YourLetter);
+
+        const outcome = outcomeOfTheRound(opponentsShape, yourShape);
+
+        return calculateScore(yourShape, outcome);
+    };
+
+    const scores = Identity.of(input).map(format).map(map(localFn)).emit();
+
+    return sum(scores);
+};
+
+const getTotalScore = (mapper: (opponent: Shape, yourLetter: YourLetter) => Shape) => {
     const scores = lines.map((line) => {
         const [opponent, you] = line.split(" ");
 
         const opponentsShape = shapes[opponent as OpponentLetter];
-        const yourShape = mapYourShape(opponentsShape, you as YourLetter);
+        const yourShape = mapper(opponentsShape, you as YourLetter);
 
         const outcome = outcomeOfTheRound(opponentsShape, yourShape);
 

@@ -6,7 +6,7 @@ interface IdentityFactory {
     <A>(x: A): Identity<A>;
 }
 
-const Identity = <A>(x: A): Identity<A> => ({
+const LocalIdentity = <A>(x: A): Identity<A> => ({
     emit: () => x,
     bind: (f) => f(x),
     chain: (f) => f(x),
@@ -15,7 +15,7 @@ const Identity = <A>(x: A): Identity<A> => ({
 });
 
 // you might do type-checking here
-const of: IdentityFactory = (x) => Identity(x);
+const of: IdentityFactory = (x) => LocalIdentity(x);
 
 const exportOf = {
     of,
