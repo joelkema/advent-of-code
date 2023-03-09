@@ -1,11 +1,11 @@
+import {  sliceAndSum } from "../../utils";
+import { filter } from "../../utils/array";
 import input from "./input";
 
-const add = (accumulator: number, a: number) => accumulator + a;
-const sliceAndSum = (start: number, end: number) => input.slice(start, end).reduce(add, 0);
 
-const assignment1 = () => input.filter((v, i) => v < input[i + 1]).length;
+const assignment1 = () => filter((v: number, i) => v < input[i + 1])(input).length;
 
-const assignment2 = () => input.filter((v, i) => sliceAndSum(i + 1, i + 4) > sliceAndSum(i, i + 3)).length;
+const assignment2 = () => input.filter((v, i) => sliceAndSum(i + 1, i + 4)(input) > sliceAndSum(i, i + 3)(input)).length;
 
 const Day = () => (
     <main>

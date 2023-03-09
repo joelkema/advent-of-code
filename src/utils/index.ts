@@ -1,10 +1,13 @@
-import { reduce } from "./array";
+import { pipe } from "../shared/logic";
+import { reduce, slice } from "./array";
 
-const add = (accumulator: number, a: number) => accumulator + a;
-const multiply = (accumulator: number, a: number) => accumulator * a;
+export const add = (accumulator: number, a: number) => accumulator + a;
+export const multiply = (accumulator: number, a: number) => accumulator * a;
 
 export const sum = reduce(add, 0);
 export const sumProduct = reduce(multiply, 1);
+
+export const sliceAndSum = <T>(start: number, end: number) => (input: number[]) => pipe(input, slice(start, end), reduce(add, 0))
 
 export const difference = <T>(arr1: T[], arr2: T[]) =>
     arr1.filter((x) => !arr2.includes(x)).concat(arr2.filter((x) => !arr1.includes(x)));

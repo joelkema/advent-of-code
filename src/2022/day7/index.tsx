@@ -25,15 +25,15 @@ const createFile = (name: string, size: number): File => ({
 const terminalOutput = getNewLines(input);
 const fileSystem: Directory = createDir("/");
 
-const traverseDirs = (fileSystem: Directory, dir: string) => {
-    console.log("trying to find " + dir);
-    console.log(fileSystem);
+const findDir = (currentDir: Directory, cmd: string) => {
+    console.log("trying to find " + cmd);
+    console.log(currentDir);
 
-    return fileSystem.dirs.find((a) => a.name === dir)!;
+    return currentDir.dirs.find((a) => a.name === cmd)!;
 };
 
 const createOrGetDir = (currentDir: Directory, name: string) => {
-    const existingDir = fileSystem.dirs.find((a) => a.name === name);
+    const existingDir = currentDir.dirs.find((a) => a.name === name);
     if (existingDir) return existingDir;
 
     const newDir = createDir(name);
@@ -42,10 +42,15 @@ const createOrGetDir = (currentDir: Directory, name: string) => {
     return newDir;
 };
 
-const changeDir = (dir: string): Directory => {
-    if (dir === "/") return fileSystem;
+const changeDir = (currentDir: Directory, cmd: string): Directory => {
 
-    return traverseDirs(fileSystem, dir);
+    if (cmd === "/") return currentDir;
+    if (cmd === "..") {
+        return fileSystem;
+    }
+
+    // go to child dir
+    return findDir(currentDir, cmd);
 };
 
 const assignment1 = () => {
@@ -56,12 +61,14 @@ const assignment1 = () => {
         const pieces = terminalOutput[i].split(" ");
 
         if (pieces[0] === "$" && pieces[1] === "cd") {
-            currentDir = changeDir(pieces[2]);
+            currentDir = changeDir(currentDir, pieces[2]);
         } else if (pieces[0] === "$" && pieces[1] === "ls") continue;
         else if (pieces[0] === "dir") {
-            currentDir = createOrGetDir(currentDir, pieces[1]);
+            createOrGetDir(currentDir, pieces[1]); 
         } else {
-            currentDir.files.push(createFile(pieces[1], parseInt(pieces[0])));
+
+            if(currentDir)
+                currentDir.files.push(createFile(pieces[1], parseInt(pieces[0])));
         }
     }
 
