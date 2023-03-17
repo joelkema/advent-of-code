@@ -27,3 +27,5 @@ export const slice =
     <T>(start?: number | undefined, end?: number | undefined) =>
     (arr: T[]) =>
         arr.slice(start, end);
+
+export const getColumn = <T>(column: number) => (matrix: T[][]) => matrix.map((v, i) => v[column]);

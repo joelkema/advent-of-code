@@ -33,3 +33,5 @@ export const getInput = () =>
     fetch("/input.txt")
         .then((response) => response.text())
         .then((text) => console.log(text));
+
+export const parseStringToInt = (s: string) => parseInt(s, 10);

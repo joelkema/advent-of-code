@@ -22,7 +22,7 @@ const createFile = (name: string, size: number): File => ({
     size,
 });
 
-const terminalOutput = getNewLines(input);
+const terminalOutput = [...getNewLines(input)];
 const fileSystem: Directory = createDir("/");
 
 const findDir = (currentDir: Directory, cmd: string) => {
@@ -56,6 +56,9 @@ const changeDir = (currentDir: Directory, cmd: string): Directory => {
 const assignment1 = () => {
     let cursor: string[] = [];
     let currentDir: Directory = fileSystem;
+
+    console.log(currentDir)
+
 
     for (let i = 0; i < terminalOutput.length; i++) {
         const pieces = terminalOutput[i].split(" ");
