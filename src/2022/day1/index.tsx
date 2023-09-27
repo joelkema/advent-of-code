@@ -24,6 +24,7 @@ const calories = Identity.of(input).map(splitByDoubleEnter).map(getCalories);
 const fp1 = calories.map(max).emit();
 const fp2 = calories.map(sortNumeric).map(slice(0, 3)).map(sum).emit();
 
+
 const Day = () => (
     <main>
         <h2>Day 1</h2>
