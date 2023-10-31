@@ -7,6 +7,7 @@ import Day42021 from "./2021/day4";
 import Day102021 from "./2021/day10";
 import Day112021 from "./2021/day11";
 import days2022 from "./2022";
+import days2023 from "./2023";
 
 import { FC } from "react";
 
@@ -89,7 +90,12 @@ const App = () => (
                         <Route path={(i + 1).toString()} element={<Day />} />
                     ))}
                 </Route>
-
+                <Route path="/2023">
+                    <Route index element={days2023[0]} />
+                    {days2023.map((Day, i) => (
+                        <Route path={(i + 1).toString()} element={<Day />} />
+                    ))}
+                </Route>
                 <Route path="*" element={<NoMatch />} />
             </Route>
         </Routes>
