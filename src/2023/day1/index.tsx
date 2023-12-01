@@ -29,37 +29,46 @@ const numberTable: Record<string, number> = {
 // 2 = g
 // 3 =
 
-const slidingWindow = (array: string[], size: number) => {
-    if (size > array.length) return null;
+// const slidingWindow = (array: string[], size: number) => {
+//     if (size > array.length) return null;
 
-    const result = [];
-    for (let i = 0; i < array.length - size + 1; i++) {
-        result.push(array.slice(i, i + size));
-    }
-    debugger;
+//     const result = [];
+//     for (let i = 0; i < array.length - size + 1; i++) {
+//         result.push(array.slice(i, i + size));
+//     }
 
-    return result;
-};
+//     return result;
+// };
 
-slidingWindow("eightwonine".split(""), 5);
+// slidingWindow("eightwonine".split(""), 5);
 
-// replace each word with a number
+// replace first word with a number
+// replace last word with a number
 // so eightwonine becomes 829
 const mapWordsToNumbers = (sentence: string) => {
-    let result = "";
-    // let window = "";
-    let start = 0;
+    sentence = "28gtbkszmrtmnineoneightmx";
 
-    for (let i = start; i < sentence.length; i++) {
-        const w = sentence.slice(start, i + 1);
-        console.log(w);
-        if (numberTable[w] !== undefined) {
-            console.log("FOUND ONE!!");
-            result += numberTable[w].toString();
-            i += 2; // skip next two characters
-        }
-    }
-    return result;
+    const regex = new RegExp(/(?=(zero|one|two|three|four|five|six|seven|eight|nine))/, "g");
+
+    // positive lookahead assertion for overlapping matches
+
+    const matches = sentence.matchAll(regex);
+
+    debugger;
+
+    debugger;
+    let output = sentence;
+    // if (matches.length === 0) return output;
+    // if (matches.length === 1) return output.replace(matches[0], numberTable[matches[0]].toString());
+
+    // console.log(matches);
+
+    // // replace first
+    // output = output.replace(matches[0], numberTable[matches[0]].toString());
+    // // replace last
+    // output = output.replace(matches[matches.length - 1], numberTable[matches[matches.length - 1]].toString());
+
+    return output;
 };
 
 const assignment1 = () =>
@@ -89,11 +98,17 @@ const assignment2 = () =>
         A.map((s: string) =>
             pipe(
                 s,
+                tap,
                 mapWordsToNumbers,
                 // tap,
-                // // get first and last number
-                // (nums: number[]) => [nums[0], nums[nums.length - 1]],
-                // (nums: number[]) => nums.join(""),
+                (s) => s.split(""),
+                A.map(Number),
+                A.filter(isNumber),
+                // tap,
+                // get first and last number
+                (nums: number[]) => [nums[0], nums[nums.length - 1]],
+                tap,
+                (nums: number[]) => nums.join(""),
                 // tap,
             ),
         ),
