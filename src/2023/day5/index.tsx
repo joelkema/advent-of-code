@@ -56,12 +56,29 @@ const assignment1 = () => {
     // then i want to map to number
     // then i want to filter out NaN
 
-    const [seeds, seedToSoil] = blocks.map((block) =>
+    const [
+        seeds,
+        seedToSoil,
+        soilToFertilizer,
+        fertilizerToWater,
+        waterToLight,
+        lightTotemperature,
+        temperatureToHumidity,
+        humidityToLocation,
+    ] = blocks.map((block) =>
         block
             .replace(/[a-z-:]/g, "")
             .split("\n")
-            .map((line) => line.split(" ").map(Number).filter(N.isNumber)),
+            .map((line) =>
+                line
+                    .split(" ")
+                    .filter((n) => n !== "")
+                    .map(Number),
+            )
+            .filter(A.isNonEmpty),
     );
+
+    const soil = sourceToDestination(seedToSoil);
 
     debugger;
 };
