@@ -8,6 +8,16 @@ import * as N from "fp-ts/number";
 import * as O from "fp-ts/Option";
 import { initial } from "lodash";
 
+type Seed = {
+    soil: number;
+    fertilizer: number;
+    water: number;
+    light: number;
+    temperature: number;
+    humidity: number;
+    location: number;
+};
+
 const splitByDoubleEnter = split(/\n\s*\n/);
 
 const getBlocks = (i: string) => pipe(i, splitByDoubleEnter);
@@ -75,10 +85,29 @@ const assignment1 = () => {
                     .filter((n) => n !== "")
                     .map(Number),
             )
-            .filter(A.isNonEmpty),
+            .filter((a) => a.length > 0),
     );
 
     const soil = sourceToDestination(seedToSoil);
+    const fertilizer = sourceToDestination(soilToFertilizer);
+    const water = sourceToDestination(fertilizerToWater);
+    const light = sourceToDestination(waterToLight);
+    const temperature = sourceToDestination(lightTotemperature);
+    const humidity = sourceToDestination(temperatureToHumidity);
+    const location = sourceToDestination(humidityToLocation);
+
+    const allSeeds = seeds[0].map((seed) => {
+        const seedSoil = soil[seed];
+
+        return {
+            soil: soil[seedSoil],
+            // fertilizer: fertilizer[seedFertilizer],
+            // water: water[seedWater],
+            // light: light[seedLight],
+            // temperature: temperature[seedTemperature],
+            // humidity: humidity[seedHumidity],
+        };
+    });
 
     debugger;
 };
