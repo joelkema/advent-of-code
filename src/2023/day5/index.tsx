@@ -9,6 +9,7 @@ import * as O from "fp-ts/Option";
 import { initial } from "lodash";
 
 type Seed = {
+    seed: number;
     soil: number;
     fertilizer: number;
     water: number;
@@ -29,16 +30,22 @@ const sourceToDestination = (numbers: number[][]) => {
     const max = Math.max(...numbers.map((arr) => Math.max(...arr)));
 
     // generate an array of index with the size of max
-    const values = Array.from(Array(max).keys());
+    const values: number[] = Array.from(Array(max).keys());
 
     for (let i = min; i < numbers.length; i++) {
         const [destinationRangeStart, sourceRangeStart, rangeLength] = numbers[i];
 
         // generate a range of numbers from destinationRangeStart to rangeLength
-        const destinationRange = Array.from(Array(rangeLength).keys()).map((i) => i + destinationRangeStart);
+        let destinationRange: number[] = [];
+        for (let i = 0; i < rangeLength; i++) {
+            destinationRange.push(i + destinationRangeStart);
+        }
 
         // generate a range of numbers from sourceRangeStart to rangeLength
-        const sourceRange = Array.from(Array(rangeLength).keys()).map((i) => i + sourceRangeStart);
+        let sourceRange: number[] = [];
+        for (let i = 0; i < rangeLength; i++) {
+            sourceRange.push(i + sourceRangeStart);
+        }
 
         // combine sourceRange as key, and destinationRange as value
         // so values[sourceRange[i]] = destinationRange[i]
@@ -90,26 +97,45 @@ const assignment1 = () => {
 
     const soil = sourceToDestination(seedToSoil);
     const fertilizer = sourceToDestination(soilToFertilizer);
+
+    console.log("fertilizerToWater");
+    console.log(fertilizerToWater);
+
     const water = sourceToDestination(fertilizerToWater);
     const light = sourceToDestination(waterToLight);
     const temperature = sourceToDestination(lightTotemperature);
+
     const humidity = sourceToDestination(temperatureToHumidity);
     const location = sourceToDestination(humidityToLocation);
 
-    const allSeeds = seeds[0].map((seed) => {
+    const all = seeds[0].map((seed) => {
         const seedSoil = soil[seed];
+        const soilFertilizer = fertilizer[seedSoil] || seedSoil;
+        const fertilizerWater = water[soilFertilizer] || soilFertilizer;
+        const waterLight = light[fertilizerWater] || fertilizerWater;
+        const lightTemperature = temperature[waterLight] || waterLight;
+        const temperatureHumidity = humidity[lightTemperature] || lightTemperature;
+        const humidityLocation = location[temperatureHumidity] || temperatureHumidity;
+
+        console.log(seed, seedSoil);
 
         return {
-            soil: soil[seedSoil],
-            // fertilizer: fertilizer[seedFertilizer],
-            // water: water[seedWater],
-            // light: light[seedLight],
-            // temperature: temperature[seedTemperature],
-            // humidity: humidity[seedHumidity],
+            seed,
+            soil: seedSoil,
+            fertilizer: soilFertilizer,
+            water: fertilizerWater,
+            light: waterLight,
+            temperature: lightTemperature,
+            humidity: temperatureHumidity,
+            location: humidityLocation,
         };
     });
 
-    debugger;
+    const locations = all.map((s) => s.location);
+
+    console.log(all);
+
+    return Math.min(...locations);
 };
 
 const assignment2 = () => {};
