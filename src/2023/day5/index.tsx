@@ -1,23 +1,6 @@
 import { pipe } from "fp-ts/lib/function";
 import { split } from "../../utils/string";
-import { removeWhitespaces, sum } from "../../utils";
-import * as A from "fp-ts/Array";
 import { input } from "./input";
-import { intersection } from "fp-ts/Array";
-import * as N from "fp-ts/number";
-import * as O from "fp-ts/Option";
-import { initial } from "lodash";
-
-type Seed = {
-    seed: number;
-    soil: number;
-    fertilizer: number;
-    water: number;
-    light: number;
-    temperature: number;
-    humidity: number;
-    location: number;
-};
 
 const splitByDoubleEnter = split(/\n\s*\n/);
 
@@ -27,13 +10,14 @@ const getBlocks = (i: string) => pipe(i, splitByDoubleEnter);
 // sourceRangeStart = seed
 const sourceToDestination = (numbers: number[][]) => {
     const min = 0;
-    const max = Math.max(...numbers.map((arr) => Math.max(...arr)));
 
     // generate an array of index with the size of max
-    const values: number[] = Array.from(Array(max).keys());
+    const values: number[] = [];
 
     for (let i = min; i < numbers.length; i++) {
         const [destinationRangeStart, sourceRangeStart, rangeLength] = numbers[i];
+
+        console.log(destinationRangeStart, sourceRangeStart, rangeLength);
 
         // generate a range of numbers from destinationRangeStart to rangeLength
         let destinationRange: number[] = [];
@@ -41,28 +25,32 @@ const sourceToDestination = (numbers: number[][]) => {
             destinationRange.push(i + destinationRangeStart);
         }
 
-        // generate a range of numbers from sourceRangeStart to rangeLength
-        let sourceRange: number[] = [];
-        for (let i = 0; i < rangeLength; i++) {
-            sourceRange.push(i + sourceRangeStart);
-        }
+        console.log(destinationRange);
 
-        // combine sourceRange as key, and destinationRange as value
-        // so values[sourceRange[i]] = destinationRange[i]
-
-        for (let i = 0; i < rangeLength; i++) {
-            values[sourceRange[i]] = destinationRange[i];
-        }
+        //     // generate a range of numbers from sourceRangeStart to rangeLength
+        //     let sourceRange: number[] = [];
+        //     for (let i = 0; i < rangeLength; i++) {
+        //         sourceRange.push(i + sourceRangeStart);
+        //     }
+        //     // combine sourceRange as key, and destinationRange as value
+        //     // so values[sourceRange[i]] = destinationRange[i]
+        //     for (let i = 0; i < rangeLength; i++) {
+        //         values[sourceRange[i]] = destinationRange[i];
+        //     }
     }
 
     return values;
 };
+
+// THIS MAKES EVERYTHING CRASHUH
 
 const assignment1 = () => {
     // const seedToSoil = sourceToDestination([
     //     [50, 98, 2],
     //     [52, 50, 48],
     // ]);
+
+    sourceToDestination([[803630304, 624445326, 165226844]]);
 
     const blocks = getBlocks(input);
 
@@ -72,6 +60,8 @@ const assignment1 = () => {
     // then i want to filter out empty strings
     // then i want to map to number
     // then i want to filter out NaN
+
+    return 0;
 
     const [
         seeds,
@@ -96,46 +86,39 @@ const assignment1 = () => {
     );
 
     const soil = sourceToDestination(seedToSoil);
-    const fertilizer = sourceToDestination(soilToFertilizer);
+    // const fertilizer = sourceToDestination(soilToFertilizer);
+    // const water = sourceToDestination(fertilizerToWater);
+    // const light = sourceToDestination(waterToLight);
+    // const temperature = sourceToDestination(lightTotemperature);
+    // const humidity = sourceToDestination(temperatureToHumidity);
+    // const location = sourceToDestination(humidityToLocation);
 
-    console.log("fertilizerToWater");
-    console.log(fertilizerToWater);
+    // const all = seeds[0].map((seed) => {
+    //     const seedSoil = soil[seed] || seed;
+    //     const soilFertilizer = fertilizer[seedSoil] || seedSoil;
+    //     const fertilizerWater = water[soilFertilizer] || soilFertilizer;
+    //     const waterLight = light[fertilizerWater] || fertilizerWater;
+    //     const lightTemperature = temperature[waterLight] || waterLight;
+    //     const temperatureHumidity = humidity[lightTemperature] || lightTemperature;
+    //     const humidityLocation = location[temperatureHumidity] || temperatureHumidity;
 
-    const water = sourceToDestination(fertilizerToWater);
-    const light = sourceToDestination(waterToLight);
-    const temperature = sourceToDestination(lightTotemperature);
+    //     return {
+    //         seed,
+    //         soil: seedSoil,
+    //         fertilizer: soilFertilizer,
+    //         water: fertilizerWater,
+    //         light: waterLight,
+    //         temperature: lightTemperature,
+    //         humidity: temperatureHumidity,
+    //         location: humidityLocation,
+    //     };
+    // });
 
-    const humidity = sourceToDestination(temperatureToHumidity);
-    const location = sourceToDestination(humidityToLocation);
+    return 0;
 
-    const all = seeds[0].map((seed) => {
-        const seedSoil = soil[seed];
-        const soilFertilizer = fertilizer[seedSoil] || seedSoil;
-        const fertilizerWater = water[soilFertilizer] || soilFertilizer;
-        const waterLight = light[fertilizerWater] || fertilizerWater;
-        const lightTemperature = temperature[waterLight] || waterLight;
-        const temperatureHumidity = humidity[lightTemperature] || lightTemperature;
-        const humidityLocation = location[temperatureHumidity] || temperatureHumidity;
+    // const locations = all.map((s) => s.location);
 
-        console.log(seed, seedSoil);
-
-        return {
-            seed,
-            soil: seedSoil,
-            fertilizer: soilFertilizer,
-            water: fertilizerWater,
-            light: waterLight,
-            temperature: lightTemperature,
-            humidity: temperatureHumidity,
-            location: humidityLocation,
-        };
-    });
-
-    const locations = all.map((s) => s.location);
-
-    console.log(all);
-
-    return Math.min(...locations);
+    // return Math.min(...locations);
 };
 
 const assignment2 = () => {};
