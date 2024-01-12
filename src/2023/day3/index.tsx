@@ -3,7 +3,6 @@ import { split } from "../../utils/string";
 import { removeWhitespaces } from "../../utils";
 import * as A from "fp-ts/Array";
 import { input } from "./input";
-import { isNumber } from "lodash";
 
 const getLines = (i: string) => pipe(i, split(/\n/), A.map(removeWhitespaces));
 

@@ -78,7 +78,28 @@ const assignment1 = () => {
 
             return hand;
         })
-        .sort((a, b) => a.strength - b.strength);
+        .sort((a, b) => a.strength - b.strength)
+        .sort((a, b) => {
+            // sort by first highest letter of cards
+            // that can be the first, second or third
+            if (a.strength === b.strength) {
+                // const compareChars = (index: number) => {
+                //     const aChar = a.cards[index];
+                //     const bChar = b.cards[index];
+
+                //     if (aChar === bChar) {
+                //         return compareChars(index + 1);
+                //     }
+
+                //     return aChar.charCodeAt(0) - bChar.charCodeAt(0);
+                // };
+
+                debugger;
+
+                return a.cards[0].charCodeAt(0) - b.cards[0].charCodeAt(0);
+            }
+            return 0;
+        });
 
     debugger;
 };
