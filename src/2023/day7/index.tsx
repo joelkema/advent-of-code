@@ -3,7 +3,7 @@ import { split } from "../../utils/string";
 import { input } from "./input";
 
 import * as A from "fp-ts/Array";
-import { removeWhitespaces, sumProduct } from "../../utils";
+import { removeWhitespaces, sum, sumProduct } from "../../utils";
 import { get } from "lodash";
 
 const getLines = (i: string) => pipe(i, split(/\n/));
@@ -22,7 +22,17 @@ type Hand = {
     occurences: {
         [key: string]: number;
     };
+    // hand strength by a table
+    // 0: high card
+    // 1: one pair
+    // 2: two pair
+    // 3: three of a kind
+    // 4: full house
+    // 5: four of a kind
+    // 6: five of a kind
     strength: number;
+    // the total value of the hand, example, two aces is 14 + 14 = 28
+    totalValue: number;
 };
 
 const countUniqueChars = (s: string): Record<string, number> =>
@@ -61,8 +71,11 @@ const getHand = (cards: string): Hand => {
         cards: cardValues,
         occurences,
         strength,
+        totalValue: sum(cardValues.map(getStrength)),
     };
 };
+
+const getStrength = (card: string) => cardStrength[card as keyof typeof cardStrength] || Number(card[0]);
 
 const assignment1 = () => {
     const lines = getLines(input);
@@ -76,32 +89,33 @@ const assignment1 = () => {
 
             const hand = getHand(cards);
 
-            return hand;
+            return { hand, bid };
         })
-        .sort((a, b) => a.strength - b.strength)
+        // first by hand strength
+        .sort((a, b) => a.hand.strength - b.hand.strength)
+        // then by total value (if strength is the same)
+        // .sort((a, b) => a.hand.totalValue - b.hand.totalValue)
+        // then by highest card
         .sort((a, b) => {
             // sort by first highest letter of cards
             // that can be the first, second or third
-            if (a.strength === b.strength) {
-                // const compareChars = (index: number) => {
-                //     const aChar = a.cards[index];
-                //     const bChar = b.cards[index];
+            if (a.hand.strength === b.hand.strength) {
+                const highest = a.hand.cards.map((card, index) => {
+                    const strength = getStrength(card);
+                    const bStrength = getStrength(b.hand.cards[index]);
 
-                //     if (aChar === bChar) {
-                //         return compareChars(index + 1);
-                //     }
+                    if (strength - bStrength !== 0) return strength - bStrength;
 
-                //     return aChar.charCodeAt(0) - bChar.charCodeAt(0);
-                // };
+                    return 0;
+                });
 
-                debugger;
-
-                return a.cards[0].charCodeAt(0) - b.cards[0].charCodeAt(0);
+                return highest.find((b) => b !== 0) || 0;
             }
             return 0;
         });
 
-    debugger;
+    // sum bids
+    return sum(hands.map(({ hand, bid }, index) => (index + 1) * bid));
 };
 const assignment2 = () => {};
 
