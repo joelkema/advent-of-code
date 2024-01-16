@@ -6,17 +6,6 @@ import * as A from "fp-ts/Array";
 import { removeWhitespaces, sum, sumProduct } from "../../utils";
 import { get } from "lodash";
 
-const getLines = (i: string) => pipe(i, split(/\n/));
-
-const cardStrength = {
-    A: 14,
-    K: 13,
-    Q: 12,
-    J: 11,
-    T: 10,
-    // rest is number
-};
-
 type Hand = {
     cards: string[];
     occurences: {
@@ -35,13 +24,29 @@ type Hand = {
     totalValue: number;
 };
 
+const getLines = (i: string) => pipe(i, split(/\n/));
+
+const cardStrengthDay1 = {
+    A: 14,
+    K: 13,
+    Q: 12,
+    J: 11,
+    T: 10,
+    // rest is number
+};
+
+const getStrength =
+    (strengthMapping = cardStrengthDay1) =>
+    (card: string) =>
+        strengthMapping[card as keyof typeof strengthMapping] || Number(card[0]);
+
 const countUniqueChars = (s: string): Record<string, number> =>
     s.split("").reduce((prev, curr) => {
         prev[curr] = (prev[curr] || 0) + 1;
         return prev;
     }, {} as Record<string, number>);
 
-const getHand = (cards: string): Hand => {
+const getHand = (cards: string, strengthMapping = cardStrengthDay1): Hand => {
     const cardValues = cards.split("");
     const occurences = countUniqueChars(cards);
     const values = Object.values(occurences);
@@ -71,11 +76,9 @@ const getHand = (cards: string): Hand => {
         cards: cardValues,
         occurences,
         strength,
-        totalValue: sum(cardValues.map(getStrength)),
+        totalValue: sum(cardValues.map(getStrength(strengthMapping))),
     };
 };
-
-const getStrength = (card: string) => cardStrength[card as keyof typeof cardStrength] || Number(card[0]);
 
 const assignment1 = () => {
     const lines = getLines(input);
@@ -101,8 +104,9 @@ const assignment1 = () => {
             // that can be the first, second or third
             if (a.hand.strength === b.hand.strength) {
                 const highest = a.hand.cards.map((card, index) => {
-                    const strength = getStrength(card);
-                    const bStrength = getStrength(b.hand.cards[index]);
+                    const calculateStrength = getStrength(cardStrengthDay1);
+                    const strength = calculateStrength(card);
+                    const bStrength = calculateStrength(b.hand.cards[index]);
 
                     if (strength - bStrength !== 0) return strength - bStrength;
 

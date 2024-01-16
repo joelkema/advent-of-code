@@ -10,8 +10,10 @@ const assignment1 = () => {
     let lanternfishes = input.split(",").map(Number);
     const days = 80;
 
+    // brute forcing works for this one
     for (let day = 0; day < days; day++) {
         let length = lanternfishes.length;
+
         for (let i = 0; i < length; i++) {
             // it was present at the start of the day
             if (i <= length) {
@@ -34,6 +36,14 @@ const assignment2 = () => {
     let lanternfishes = new Uint32Array(input.split(",").map(Number));
 
     const days = 50;
+
+    // get counts, so:
+    //     Just focus on the number of fishes of each age.
+    // Zeros=3.
+    // Ones=4.
+    // Twos=2.
+    // Fives=6.
+    // Sevens=1.
 
     for (let day = 0; day < days; day++) {
         let length = lanternfishes.length;
