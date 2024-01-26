@@ -6,76 +6,53 @@ import { input } from "./input";
 import { removeWhitespaces, sum } from "../../utils";
 
 // https://adventofcode.com/2021/day/6
-const assignment1 = () => {
-    let lanternfishes = input.split(",").map(Number);
-    const days = 80;
+const assignment = (days: number) => {
+    let parsedInput = input.split(",").map(Number);
 
-    // brute forcing works for this one
-    for (let day = 0; day < days; day++) {
-        let length = lanternfishes.length;
+    let lanternfishes: Record<number, number> = {
+        0: 0,
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0,
+        6: 0,
+        7: 0,
+        8: 0,
+    };
 
-        for (let i = 0; i < length; i++) {
-            // it was present at the start of the day
-            if (i <= length) {
-                lanternfishes[i] = lanternfishes[i] - 1;
-            }
-
-            // a 0 becomes a 6 and adds a new 8 to the end of the list
-            if (lanternfishes[i] < 0) {
-                lanternfishes[i] = 6;
-                lanternfishes.push(8);
-            }
-        }
-    }
-
-    return lanternfishes.length;
-};
-
-// https://adventofcode.com/2021/day/6#part2
-const assignment2 = () => {
-    let lanternfishes = new Uint32Array(input.split(",").map(Number));
-
-    const days = 50;
-
-    // get counts, so:
-    //     Just focus on the number of fishes of each age.
-    // Zeros=3.
-    // Ones=4.
-    // Twos=2.
-    // Fives=6.
-    // Sevens=1.
+    Object.keys(lanternfishes).forEach((key) => {
+        lanternfishes[Number(key)] = parsedInput.filter((p) => p === Number(key)).length;
+    });
 
     for (let day = 0; day < days; day++) {
-        let length = lanternfishes.length;
-        for (let i = 0; i < length; i++) {
-            // it was present at the start of the day
-            if (i <= length) {
-                lanternfishes[i] = lanternfishes[i] - 1;
-            }
+        let newLanternfishes: Record<number, number> = {};
 
-            // a 0 becomes a 6 and adds a new 8 to the end of the list
-            if (lanternfishes[i] < 0) {
-                lanternfishes[i] = 6;
+        for (let i = 0; i <= 8; i++) {
+            if (!lanternfishes[i]) continue;
 
-                // lanternfishes[i + 1] = 8;
-
-                // lanternfishes = new Uint32Array(lanternfishes.length + 1);
-                // lanternfishes.set([...lanternfishes, 1]);
-                debugger;
+            if (i === 0) {
+                newLanternfishes[6] = lanternfishes[i];
+                newLanternfishes[8] = newLanternfishes[8] ? newLanternfishes[8] + lanternfishes[i] : lanternfishes[i];
+            } else {
+                newLanternfishes[i - 1] = lanternfishes[i] + (newLanternfishes[i - 1] ? newLanternfishes[i - 1] : 0);
             }
         }
-
-        console.log(`After ${day + 1} days:`, lanternfishes.join(","));
+        lanternfishes = newLanternfishes;
     }
 
-    return lanternfishes.length;
+    console.log(lanternfishes);
+
+    console.log(sum(Object.values(lanternfishes)));
+
+    return sum(Object.values(lanternfishes));
 };
 
 const Day = () => (
     <main>
         <h2>Day 6</h2>
-        <p>Part one: {assignment1()}</p>
-        <p>Part two: {assignment2()}</p>
+        <p>Part one: {assignment(80)}</p>
+        <p>Part two: {assignment(256)}</p>
     </main>
 );
 
