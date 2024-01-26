@@ -1,9 +1,5 @@
-import { pipe } from "fp-ts/function";
-import * as A from "fp-ts/Array";
-import { isNumber } from "../../shared/predicates";
-import { split } from "../../utils/string";
 import { input } from "./input";
-import { removeWhitespaces, sum } from "../../utils";
+import { sum } from "../../utils";
 
 // https://adventofcode.com/2021/day/6
 const assignment = (days: number) => {
@@ -40,10 +36,6 @@ const assignment = (days: number) => {
         }
         lanternfishes = newLanternfishes;
     }
-
-    console.log(lanternfishes);
-
-    console.log(sum(Object.values(lanternfishes)));
 
     return sum(Object.values(lanternfishes));
 };
