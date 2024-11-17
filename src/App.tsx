@@ -6,6 +6,7 @@ import Day32021 from "./2021/day3";
 import Day42021 from "./2021/day4";
 import Day102021 from "./2021/day10";
 import Day112021 from "./2021/day11";
+import days2015 from "./2015";
 import days2021 from "./2021";
 import days2022 from "./2022";
 import days2023 from "./2023";
@@ -73,6 +74,10 @@ const App = () => (
             <Route path="/" element={<Layout years={[2015, 2021, 2022, 2023]} />}>
                 <Route index element={<Home />} />
                 <Route path="/2015">
+                    <Route index element={days2015[0]} />
+                    {days2015.map((Day, i) => (
+                        <Route path={(i + 1).toString()} element={<Day />} />
+                    ))}
                     {/* <Route index element={<Day12015 />} /> */}
                     {/* <Route path="day1" element={<Day12015 />} /> */}
                 </Route>
