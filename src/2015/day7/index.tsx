@@ -45,8 +45,10 @@ const parseOperation = (input: string): Operation => {
 };
 
 const evaluateCircuit = (operationStrings: string[], override?: Record<string, string>) => {
-    const operations = operationStrings.map(parseOperation); // Parse all operations
-    const resolved: Resolved = {}; // Cache for resolved wire values
+    const operations = operationStrings.map(parseOperation);
+
+    // cache values
+    const resolved: Resolved = {};
 
     const resolve = (name: string): number => {
         // If there's an override, resolve the wire based on the override wire
@@ -64,11 +66,16 @@ const evaluateCircuit = (operationStrings: string[], override?: Record<string, s
         const operation = operations.find((op) => op.output === name);
         if (!operation) throw new Error(`Wire ${name} is undefined`);
 
+        console.log(`Evaluating operation: ${operation.inputs.join(" ")} ${operation.operator} -> ${operation.output}`);
+
         // Resolve inputs recursively
         const inputs = operation.inputs.map(resolve);
 
         // Compute the value using the operator
         const value = operators[operation.operator](...inputs);
+
+        // Print the flow of this wire resolution
+        console.log(`Resolved ${name} with inputs ${inputs.join(", ")} -> ${value}`);
 
         // Cache and return the computed value
         resolved[name] = value;
