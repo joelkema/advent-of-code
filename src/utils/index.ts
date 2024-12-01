@@ -7,7 +7,10 @@ export const multiply = (accumulator: number, a: number) => accumulator * a;
 export const sum = reduce(add, 0);
 export const sumProduct = reduce(multiply, 1);
 
-export const sliceAndSum = <T>(start: number, end: number) => (input: number[]) => pipe(input, slice(start, end), reduce(add, 0))
+export const sliceAndSum =
+    <T>(start: number, end: number) =>
+        (input: number[]) =>
+            pipe(input, slice(start, end), reduce(add, 0));
 
 export const difference = <T>(arr1: T[], arr2: T[]) =>
     arr1.filter((x) => !arr2.includes(x)).concat(arr2.filter((x) => !arr1.includes(x)));
@@ -18,7 +21,9 @@ export const swap = (obj: Record<any, any>): Record<any, any> =>
 export const countChars = (s: string) =>
     s.split("").reduce((res: Record<string, number>, char) => ((res[char] = (res[char] || 0) + 1), res), {});
 
-export const sortNumeric = (array: number[]) => array.sort((a, b) => b - a);
+export const sortNumeric = (array: number[], order: "asc" | "desc" = "desc") => {
+    return array.sort((a, b) => (order === "asc" ? a - b : b - a));
+};
 export const sortAlphabeticly = (s: string) => s.split("").sort().join("");
 
 export const median = (arr: number[]) => {
