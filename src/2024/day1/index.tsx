@@ -42,19 +42,11 @@ const assignment2 = () => {
         "asc",
     );
 
-    const uniqueValues = [...new Set(rightColumn)];
+    const similarities: Record<number, number> = {};
 
-    // add amounts of right column
-    const similarities = uniqueValues.reduce(
-        (acc, value) => {
-            const amountInRightColumn = rightColumn.filter((r) => r === value).length;
-            return {
-                ...acc,
-                [value]: amountInRightColumn,
-            };
-        },
-        {} as Record<number, number>,
-    );
+    for (let i = 0; i < rightColumn.length; i++) {
+        similarities[rightColumn[i]] = (similarities[rightColumn[i]] || 0) + 1;
+    }
 
     const similarity = leftColumn.map((d) => {
         return d * (similarities[d] || 0);
