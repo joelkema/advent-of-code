@@ -7,7 +7,4 @@ export const replaceAll = (searchValue: string | RegExp, replaceValue: string) =
 
 export const getNewLines = (str: string) => str.split(/\n/).filter(removeWhitespaces);
 
-export const split =
-    (splitter: { [Symbol.split](string: string, limit?: number | undefined): string[] }, limit?: number) =>
-    (string: string) =>
-        string.split(splitter, limit);
+export const split = (separator: string | RegExp, limit?: number) => (string: string) => string.split(separator, limit);
