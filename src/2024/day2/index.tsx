@@ -39,6 +39,7 @@ const maxDiffer = (levels: number[]) => {
     return diffs;
 };
 
+// this function is O(n^2) but the input is small so it's fine
 const isSafe = (levels: number[]) => maxDiffer(levels) && levelsAreInOrder(levels);
 
 const problemDampening = (levels: number[]) => {
