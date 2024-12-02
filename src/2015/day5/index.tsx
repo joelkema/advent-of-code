@@ -1,4 +1,4 @@
-import { pipe } from "fp-ts/function";
+import { pipe } from "effect";
 import * as A from "fp-ts/Array";
 import * as O from "fp-ts/Option";
 import { not } from "../../shared/logic";

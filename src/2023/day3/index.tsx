@@ -1,7 +1,7 @@
-import { pipe } from "fp-ts/lib/function";
+import { pipe } from "effect";
 import { split } from "../../utils/string";
 import { removeWhitespaces } from "../../utils";
-import * as A from "fp-ts/Array";
+import * as A from "effect/Array";
 import { input } from "./input";
 
 const getLines = (i: string) => pipe(i, split(/\n/), A.map(removeWhitespaces));

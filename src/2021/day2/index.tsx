@@ -1,8 +1,4 @@
-import * as IO from "fp-ts/lib/IO";
-import * as Array from "fp-ts/lib/Array";
 import input from "./input";
-import { pipe } from "fp-ts/lib/function";
-import * as Either from 'fp-ts/Either';
 
 type Command = "forward" | "down" | "up";
 

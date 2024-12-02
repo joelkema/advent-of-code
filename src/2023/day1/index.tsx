@@ -1,5 +1,5 @@
-import { pipe } from "fp-ts/function";
-import * as A from "fp-ts/Array";
+import { pipe } from "effect";
+import * as A from "effect/Array";
 import { isNumber } from "../../shared/predicates";
 import { split } from "../../utils/string";
 import { input } from "./input";

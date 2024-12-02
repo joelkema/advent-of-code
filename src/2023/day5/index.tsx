@@ -1,4 +1,4 @@
-import { pipe } from "fp-ts/lib/function";
+import { pipe } from "effect";
 import { split } from "../../utils/string";
 import { input } from "./input";
 

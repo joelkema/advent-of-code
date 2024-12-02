@@ -1,8 +1,8 @@
-import { pipe } from "fp-ts/lib/function";
+import { pipe } from "effect";
 import { not } from "../../shared/logic";
 import { split } from "../../utils/string";
 import { input } from "./input";
-import * as A from "fp-ts/Array";
+import * as A from "effect/Array";
 
 const getLines = (i: string) => pipe(i, split(/\n/), A.filter(not((s) => s === "")));
 

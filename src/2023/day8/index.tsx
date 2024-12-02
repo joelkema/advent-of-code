@@ -1,9 +1,8 @@
-import { pipe } from "fp-ts/lib/function";
+import { pipe } from "effect";
 import { split } from "../../utils/string";
 import { inputDay1, inputDay2 } from "./input";
-import * as S from "fp-ts/lib/string";
-import * as A from "fp-ts/lib/Array";
-import * as O from "fp-ts/lib/Option";
+import * as A from "effect/Array";
+import * as O from "effect/Option";
 
 type Node = {
     L: string;
