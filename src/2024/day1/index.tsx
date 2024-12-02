@@ -54,7 +54,7 @@ const Day = () => (
     <main>
         <h2>Day 1 </h2>
         <p> Part one: {assignment1()} </p>
-        <p> Part one: {assignment2()} </p>
+        <p> Part two: {assignment2()} </p>
     </main>
 );
 
