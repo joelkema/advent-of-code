@@ -53,10 +53,6 @@ const assignment2 = () => {
 		i++;
 	}
 
-	const a = diskmap.join("");
-
-	debugger;
-
 	return sum(filled.map((d, i) => Number(d) * i));
 };
 
