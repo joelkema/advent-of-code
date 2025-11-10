@@ -6,6 +6,7 @@ import days2021 from "./2021";
 import days2022 from "./2022";
 import days2023 from "./2023";
 import days2024 from "./2024";
+import days2025 from "./2025";
 
 import { FC, Fragment } from "react";
 
@@ -17,6 +18,7 @@ const yearsAndDays: Record<number, (() => JSX.Element)[]> = {
 	2022: days2022,
 	2023: days2023,
 	2024: days2024,
+	2025: days2025,
 };
 
 const allYears = Object.keys(yearsAndDays).map(Number);
