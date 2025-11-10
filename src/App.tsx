@@ -34,7 +34,11 @@ const Home = () => (
 	</main>
 );
 
-const days = [...Array(24)].map((u, i) => i + 1);
+// these variables prevent new memory allocations
+const normalDaysPerYear = Array.from({ length: 25 }).map((_, i) => i + 1);
+const daysIn2025 = Array.from({ length: 12 }).map((_, i) => i + 1);
+
+const days = (year: number) => (year === 2025 ? daysIn2025 : normalDaysPerYear);
 
 type LayoutProps = {
 	years: number[];
@@ -52,7 +56,7 @@ const Layout: FC<LayoutProps> = ({ years }) => (
 							<Link to={`/${year}`}>{year}</Link>
 						</summary>
 						<ul>
-							{days.map((day) => (
+							{days(year).map((day) => (
 								<li>
 									<Link key={day} to={`/${year}/${day}`}>
 										Day {day}
