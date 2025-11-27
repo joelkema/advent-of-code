@@ -3,46 +3,46 @@ import input from "./input";
 type Command = "forward" | "down" | "up";
 
 interface CommandWithAmount {
-  command: Command;
-  amount: number;
+	command: Command;
+	amount: number;
 }
 
 function parseInput(input: string[]): CommandWithAmount[] {
-  return input.map((item) => {
-    const [command, amount] = item.split(" ");
-    return { command: command as Command, amount: Number(amount) };
-  });
+	return input.map((item) => {
+		const [command, amount] = item.split(" ");
+		return { command: command as Command, amount: Number(amount) };
+	});
 }
 
 const forward: (amount: number) => (state: State) => State = (amount) => (state) => ({
-  ...state,
-  horizontalPosition: state.horizontalPosition + amount,
+	...state,
+	horizontalPosition: state.horizontalPosition + amount,
 });
 
 const down: (amount: number) => (state: State) => State = (amount) => (state) => ({
-  ...state,
-  depth: state.depth + amount,
+	...state,
+	depth: state.depth + amount,
 });
 
 const up: (amount: number) => (state: State) => State = (amount) => (state) => ({
-  ...state,
-  depth: state.depth - amount,
+	...state,
+	depth: state.depth - amount,
 });
 
 const commandMapping: Record<Command, (amount: number) => (state: State) => State> = {
-  forward,
-  down,
-  up,
+	forward,
+	down,
+	up,
 };
 
 interface State {
-  horizontalPosition: number;
-  depth: number;
+	horizontalPosition: number;
+	depth: number;
 }
 
 const initialState: State = {
-  horizontalPosition: 0,
-  depth: 0,
+	horizontalPosition: 0,
+	depth: 0,
 };
 
 // const handleCommand = ({ command, amount }: CommandWithAmount): (state: State) => State =>
@@ -63,59 +63,57 @@ const initialState: State = {
 // const result = calculateResult(commands);
 // console.log(result);
 
-
-
 const assignment1 = () => {
-    let horizontalPosition = 0;
-    let depth = 0;
+	let horizontalPosition = 0;
+	let depth = 0;
 
-    for (let i = 0; i < input.length; i++) {
-        const [command, amount] = input[i].split(" ");
+	for (let i = 0; i < input.length; i++) {
+		const [command, amount] = input[i].split(" ");
 
-        if (command === "forward") {
-            horizontalPosition += Number(amount);
-        }
-        if (command === "down") {
-            depth += Number(amount);
-        }
-        if (command === "up") {
-            depth -= Number(amount);
-        }
-    }
+		if (command === "forward") {
+			horizontalPosition += Number(amount);
+		}
+		if (command === "down") {
+			depth += Number(amount);
+		}
+		if (command === "up") {
+			depth -= Number(amount);
+		}
+	}
 
-    return horizontalPosition * depth;
+	return horizontalPosition * depth;
 };
 
 const assignment2 = () => {
-    let horizontalPosition = 0;
-    let depth = 0;
-    let aim = 0;
+	let horizontalPosition = 0;
+	let depth = 0;
+	let aim = 0;
 
-    for (let i = 0; i < input.length; i++) {
-        const [command, amount] = input[i].split(" ");
+	for (let i = 0; i < input.length; i++) {
+		const [command, amount] = input[i].split(" ");
 
-        if (command === "forward") {
-            horizontalPosition += Number(amount);
-            depth += aim * Number(amount);
-        }
-        if (command === "down") {
-            aim += Number(amount);
-        }
-        if (command === "up") {
-            aim -= Number(amount);
-        }
-    }
+		if (command === "forward") {
+			horizontalPosition += Number(amount);
+			depth += aim * Number(amount);
+		}
+		if (command === "down") {
+			aim += Number(amount);
+		}
+		if (command === "up") {
+			aim -= Number(amount);
+		}
+	}
 
-    return horizontalPosition * depth;
+	return horizontalPosition * depth;
 };
 
 const Day = () => (
-    <main>
-        <h2>Day 2</h2>
-        <p>Part one: {assignment1()}</p>
-        {/* <p>Part one: {assignment1fp()}</p> */}
-        <p>Part two: {assignment2()}</p>
-    </main>
+	<main>
+		<h2>Day 2</h2>
+		<p>Part one: {assignment1()}</p>
+		{/* <p>Part one: {assignment1fp()}</p> */}
+		<p>Part two: {assignment2()}</p>
+	</main>
 );
 
 export default Day;

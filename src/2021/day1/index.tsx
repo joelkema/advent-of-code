@@ -5,7 +5,7 @@ import input from "./input";
 const assignment1 = () => filter((v: number, i) => v < input[i + 1])(input).length;
 
 const assignment2 = () =>
-	input.filter((v, i) => sliceAndSum(i + 1, i + 4)(input) > sliceAndSum(i, i + 3)(input)).length;
+	input.filter((_, i) => sliceAndSum(i + 1, i + 4)(input) > sliceAndSum(i, i + 3)(input)).length;
 
 const Day = () => (
 	<main>

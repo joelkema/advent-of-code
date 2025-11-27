@@ -2,6 +2,7 @@ import { Routes, Route, Link, Outlet } from "react-router-dom";
 import "./App.css";
 import days2015 from "./2015";
 import days2017 from "./2017";
+import days2020 from "./2020";
 import days2021 from "./2021";
 import days2022 from "./2022";
 import days2023 from "./2023";
@@ -14,6 +15,7 @@ import { FC, Fragment } from "react";
 const yearsAndDays: Record<number, (() => JSX.Element)[]> = {
 	2015: days2015,
 	2017: days2017,
+	2020: days2020,
 	2021: days2021,
 	2022: days2022,
 	2023: days2023,
