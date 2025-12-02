@@ -17,10 +17,12 @@ const hasNSequence = (n: number) => {
 	const s = n.toString();
 
 	for (let len = 1; len <= s.length / 2; len++) {
+		// checks if the string length divide evenly by the chunk length
 		if (s.length % len !== 0) continue;
 
 		const chunk = s.slice(0, len);
 
+		// checks if the chunk is repeated
 		if (chunk.repeat(s.length / len) === s) {
 			return true;
 		}
