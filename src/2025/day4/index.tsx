@@ -34,7 +34,9 @@ const getNeighbours = (x: number, y: number, grid: string[][]) => {
 	return [left, right, top, bottom, topLeft, topRight, bottomLeft, bottomRight];
 };
 
-const getRollOfPapers = (grid: string[][]) => {
+const assignment1 = () => {
+	const grid = getGrid(input);
+
 	let papers = 0;
 
 	for (let y = 0; y < grid.length; y++) {
@@ -54,19 +56,40 @@ const getRollOfPapers = (grid: string[][]) => {
 	return papers;
 };
 
-const assignment1 = () => {
+const assignment2 = () => {
 	const grid = getGrid(input);
 
-	const rollOfPapers = getRollOfPapers(grid);
+	let papers = 0;
 
-	return rollOfPapers;
+	while (true) {
+		let removedThisRound = 0;
+
+		for (let y = 0; y < grid.length; y++) {
+			for (let x = 0; x < grid[y].length; x++) {
+				const neighbours = getNeighbours(x, y, grid);
+				const neighbourPapers = neighbours.filter((a) => a && a.includes("@"));
+				const node = grid[y][x];
+
+				if (node === "@" && neighbourPapers.length < 4) {
+					papers++;
+					grid[y][x] = "x";
+					removedThisRound++;
+				}
+			}
+		}
+
+		// If no papers removed this round → stop looping
+		if (removedThisRound === 0) break;
+	}
+
+	return papers;
 };
 
 const Day = () => (
 	<main>
 		<h2>Day 4</h2>
 		<p> Part one: {assignment1()} </p>
-		{/* <p> Part two: {assignment2()} </p> */}
+		<p> Part two: {assignment2()} </p>
 	</main>
 );
 
